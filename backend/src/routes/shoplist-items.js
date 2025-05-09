@@ -3,24 +3,24 @@ import prisma from '../lib/prisma.js';
 
 const router = express.Router();
 
+// Create a new shoplist item
 router.post('/', async (req, res) => {
   try {
-    const { name, quantity, expiredDate, tag, userId } = req.body;
+    const { name, quantity, tag, shoplistId } = req.body;
     
-    const item = await prisma.item.create({
+    const shoplistItem = await prisma.shopListItem.create({
       data: {
         name,
         quantity,
-        expiredDate,
         tag,
-        userId
+        shoplistId
       }
     });
     
-    res.status(201).json(item);
+    res.status(201).json(shoplistItem);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-export default router;
+export default router; 

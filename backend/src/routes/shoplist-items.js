@@ -3,7 +3,6 @@ import prisma from '../lib/prisma.js';
 
 const router = express.Router();
 
-// Create a new shoplist item
 router.post('/', async (req, res) => {
   try {
     const { name, quantity, tag, shoplistId } = req.body;

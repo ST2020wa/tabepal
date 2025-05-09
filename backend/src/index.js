@@ -18,10 +18,10 @@ app.get('/', (req, res) => {
 });
 
 // app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/items', itemRoutes);
-app.use('/api/shoplists', shoplistRoutes);
-app.use('/api/shoplist-items', shoplistItemRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/item', itemRoutes);
+app.use('/api/shoplist', shoplistRoutes);
+app.use('/api/shoplist-item', shoplistItemRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

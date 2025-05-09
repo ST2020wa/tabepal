@@ -18,7 +18,6 @@ router.post('/', async (req, res) => {
       }
     });
     
-    // Don't send password back in response
     const { password: _, ...userWithoutPassword } = user;
     res.status(201).json(userWithoutPassword);
   } catch (error) {

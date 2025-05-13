@@ -113,6 +113,7 @@ router.patch('/password', async (req, res) => {
   }
 });
 
+
 router.delete('/', async (req, res) => {
   try {
     const { email, password } = req.body;

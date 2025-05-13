@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-// import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import itemRoutes from './routes/items.js';
 import shoplistRoutes from './routes/shoplists.js';
@@ -17,7 +16,6 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Tabepal API' });
 });
 
-// app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/shoplists', shoplistRoutes);

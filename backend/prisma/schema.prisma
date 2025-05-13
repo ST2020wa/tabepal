@@ -41,7 +41,7 @@ model ShopListItem {
   createdAt DateTime @default(now())
   quantity Int?
   tag String?
-  shoplist ShopList @relation(fields: [shoplistId], references: [id])
+  shoplist ShopList @relation(fields: [shoplistId], references: [id], onDelete: Cascade)
   shoplistId Int
 }
 

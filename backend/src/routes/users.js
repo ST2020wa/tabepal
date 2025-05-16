@@ -1,6 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import prisma from '../lib/prisma.js';
+import { auth } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -24,38 +25,17 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const { name, email } = req.query;
-
-    if (!name && !email) {
-      return res.status(400).json({ error: 'Please provide either id or email parameter' });
-    }
-
-    let user;
-    if (name) {
-      user = await prisma.user.findUnique({
-        where: { 
-          name: name 
-        },
-        select: {
-          id: true,
-          email: true,
-          name: true,
-          createdAt: true
-        }
-      });
-    } else if (email) {
-      user = await prisma.user.findUnique({
-        where: { email },
-        select: {
-          id: true,
-          email: true,
-          name: true,
-          createdAt: true
-        }
-      });
-    }
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true
+      }
+    });
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -67,35 +47,27 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.patch('/password', async (req, res) => {
+router.patch('/password', auth, async (req, res) => {
   try {
-    const { email, currentPassword, newPassword } = req.body;
+    const { currentPassword, newPassword } = req.body;
 
-    if (!email || !currentPassword || !newPassword) {
-      return res.status(400).json({ error: 'Email, current password, and new password are required' });
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current password and new password are required' });
     }
 
-    // Find user and verify current password
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { id: req.user.id }
     });
 
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    // Verify current password
     const validPassword = await bcrypt.compare(currentPassword, user.password);
     if (!validPassword) {
       return res.status(401).json({ error: 'Current password is incorrect' });
     }
 
-    // Hash new password
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
-    // Update password
     const updatedUser = await prisma.user.update({
-      where: { email },
+      where: { id: req.user.id },
       data: { 
         password: hashedNewPassword 
       },
@@ -113,33 +85,25 @@ router.patch('/password', async (req, res) => {
   }
 });
 
-
-router.delete('/', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
+    if (!password) {
+      return res.status(400).json({ error: 'Password is required' });
     }
 
-    // Find user and verify password
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { id: req.user.id }
     });
 
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    // Verify password
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ error: 'Invalid password' });
     }
 
-    // Delete user
     await prisma.user.delete({
-      where: { email }
+      where: { id: req.user.id }
     });
 
     res.json({ message: 'User deleted successfully' });

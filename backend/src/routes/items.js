@@ -1,21 +1,32 @@
 import express from 'express';
 import prisma from '../lib/prisma.js';
+import { validateItem } from '../middleware/itemValidation.js';
+import { auth } from '../middleware/auth.js';
 
 const router = express.Router();
 
 // Get all items for a user
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const { userId } = req.query;
+    const { 
+      sortBy = 'createdAt',
+      sortOrder = 'desc',
+      tag,
+      search,
+      expired
+    } = req.query;
 
-    if (!userId) {
-      return res.status(400).json({ error: 'User ID is required' });
-    }
+    const where = {
+      userId: req.user.id,
+      ...(tag && { tag }),
+      ...(search && { name: { contains: search, mode: 'insensitive' } }),
+      ...(expired === 'true' && { expiredDate: { lt: new Date() } }),
+      ...(expired === 'false' && { expiredDate: { gt: new Date() } })
+    };
 
     const items = await prisma.item.findMany({
-      where: { 
-        userId: parseInt(userId)
-      },
+      where,
+      orderBy: { [sortBy]: sortOrder },
       select: {
         id: true,
         name: true,
@@ -33,9 +44,9 @@ router.get('/', async (req, res) => {
 });
 
 // Create a new item
-router.post('/', async (req, res) => {
+router.post('/', auth, validateItem, async (req, res) => {
   try {
-    const { name, quantity, expiredDate, tag, userId } = req.body;
+    const { name, quantity, expiredDate, tag } = req.body;
     
     const item = await prisma.item.create({
       data: {
@@ -43,7 +54,15 @@ router.post('/', async (req, res) => {
         quantity,
         expiredDate,
         tag,
-        userId
+        userId: req.user.id
+      },
+      select: {
+        id: true,
+        name: true,
+        quantity: true,
+        expiredDate: true,
+        tag: true,
+        createdAt: true
       }
     });
     
@@ -53,28 +72,27 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Update item name
-//TODO: add update quantity, expiredDate, tag etc. logic
-router.patch('/:id', async (req, res) => {
+// Update item
+router.put('/:id', auth, validateItem, async (req, res) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, quantity, expiredDate, tag } = req.body;
 
-    if (!name) {
-      return res.status(400).json({ error: 'New name is required' });
-    }
-
-    const item = await prisma.item.findUnique({
-      where: { id: parseInt(id) }
+    // Check item ownership
+    const existingItem = await prisma.item.findFirst({
+      where: { 
+        id: parseInt(id),
+        userId: req.user.id
+      }
     });
 
-    if (!item) {
+    if (!existingItem) {
       return res.status(404).json({ error: 'Item not found' });
     }
 
     const updatedItem = await prisma.item.update({
       where: { id: parseInt(id) },
-      data: { name },
+      data: { name, quantity, expiredDate, tag },
       select: {
         id: true,
         name: true,
@@ -85,19 +103,23 @@ router.patch('/:id', async (req, res) => {
       }
     });
 
-    res.json({ message: 'Item updated successfully', item: updatedItem });
+    res.json(updatedItem);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
 // Delete an item by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
 
-    const item = await prisma.item.findUnique({
-      where: { id: parseInt(id) }
+    // Check item ownership
+    const item = await prisma.item.findFirst({
+      where: { 
+        id: parseInt(id),
+        userId: req.user.id
+      }
     });
 
     if (!item) {
@@ -113,6 +135,5 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 export default router;

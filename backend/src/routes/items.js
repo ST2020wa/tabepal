@@ -73,6 +73,7 @@ router.post('/', auth, validateItem, async (req, res) => {
 });
 
 // Update item
+//why use put, not patch?
 router.put('/:id', auth, validateItem, async (req, res) => {
   try {
     const { id } = req.params;

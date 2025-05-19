@@ -1,16 +1,21 @@
 import express from 'express';
 import prisma from '../lib/prisma.js';
+import { auth } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
-    const { name, userId } = req.body;
+    const { name } = req.body;
+    if(!name.length){
+      res.status(400).json({ error: 'Name is required' });
+      return;
+    }
     
     const shoplist = await prisma.shopList.create({
       data: {
         name,
-        userId
+        userId: req.user.id
       }
     });
     
@@ -20,16 +25,10 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const { userId } = req.query;
-
-    if (!userId) {
-      return res.status(400).json({ error: 'User ID is required' });
-    }
-
     const shoplists = await prisma.shopList.findMany({
-      where: { userId: parseInt(userId) }
+      where: { userId: req.user.id }
     }); 
 
     res.json(shoplists);
@@ -39,7 +38,7 @@ router.get('/', async (req, res) => {
 });
 
 // Update shoplist name
-router.patch('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
@@ -48,8 +47,12 @@ router.patch('/:id', async (req, res) => {
       return res.status(400).json({ error: 'New name is required' });
     }
 
-    const shoplist = await prisma.shopList.findUnique({
-      where: { id: parseInt(id) }
+    // Check shoplist ownership
+    const shoplist = await prisma.shopList.findFirst({
+      where: { 
+        id: parseInt(id),
+        userId: req.user.id
+      }
     });
 
     if (!shoplist) {
@@ -74,12 +77,16 @@ router.patch('/:id', async (req, res) => {
 });
 
 // Delete shoplist by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
 
-    const shoplist = await prisma.shopList.findUnique({
-      where: { id: parseInt(id) }
+    // Check shoplist ownership
+    const shoplist = await prisma.shopList.findFirst({
+      where: { 
+        id: parseInt(id),
+        userId: req.user.id
+      }
     });
 
     if (!shoplist) {

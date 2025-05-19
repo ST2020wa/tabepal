@@ -44,6 +44,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // Create a new item
+// what does auth do?
 router.post('/', auth, validateItem, async (req, res) => {
   try {
     const { name, quantity, expiredDate, tag } = req.body;

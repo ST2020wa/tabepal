@@ -1,18 +1,35 @@
 import express from 'express';
 import prisma from '../lib/prisma.js';
+import { auth } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const { name, quantity, tag, shoplistId } = req.body;
+    if(!name.length){
+      res.status(400).json({ error: 'Name is required' });
+      return;
+    }
+    
+    // Check shoplist ownership
+    const shoplist = await prisma.shopList.findFirst({
+      where: { 
+        id: parseInt(shoplistId),
+        userId: req.user.id
+      }
+    });
+
+    if (!shoplist) {
+      return res.status(404).json({ error: 'Shoplist not found' });
+    }
     
     const shoplistItem = await prisma.shopListItem.create({
       data: {
         name,
         quantity,
         tag,
-        shoplistId
+        shoplistId: parseInt(shoplistId)
       }
     });
     
@@ -22,12 +39,24 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const { shoplistId } = req.query;
 
     if (!shoplistId) {
       return res.status(400).json({ error: 'Shoplist ID is required' });
+    }
+
+    // Check shoplist ownership
+    const shoplist = await prisma.shopList.findFirst({
+      where: { 
+        id: parseInt(shoplistId),
+        userId: req.user.id
+      }
+    });
+
+    if (!shoplist) {
+      return res.status(404).json({ error: 'Shoplist not found' });
     }
 
     const shoplistItems = await prisma.shopListItem.findMany({
@@ -40,13 +69,27 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
 
     if (!name) {
       return res.status(400).json({ error: 'Name is required for update' });
+    }
+
+    // Check shoplist item ownership through shoplist
+    const shoplistItem = await prisma.shopListItem.findFirst({
+      where: { 
+        id: parseInt(id),
+        shoplist: {
+          userId: req.user.id
+        }
+      }
+    });
+
+    if (!shoplistItem) {
+      return res.status(404).json({ error: 'Shoplist item not found' });
     }
 
     const updatedItem = await prisma.shopListItem.update({
@@ -63,9 +106,23 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Check shoplist item ownership through shoplist
+    const shoplistItem = await prisma.shopListItem.findFirst({
+      where: { 
+        id: parseInt(id),
+        shoplist: {
+          userId: req.user.id
+        }
+      }
+    });
+
+    if (!shoplistItem) {
+      return res.status(404).json({ error: 'Shoplist item not found' });
+    }
 
     await prisma.shopListItem.delete({
       where: { id: parseInt(id) }

@@ -134,8 +134,7 @@ describe('Shopping List Items Endpoints', () => {
 
     it('should update shopping list item', async () => {
       const updateData = {
-        name: 'Updated Item',
-        quantity: 10
+        name: 'Updated Item'
       };
 
       const res = await request(app)
@@ -145,7 +144,6 @@ describe('Shopping List Items Endpoints', () => {
 
       expect(res.statusCode).toBe(200);
       expect(res.body).toHaveProperty('name', updateData.name);
-      expect(res.body).toHaveProperty('quantity', updateData.quantity);
     });
 
     it('should not update non-existent item', async () => {

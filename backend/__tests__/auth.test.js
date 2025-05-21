@@ -3,18 +3,16 @@ import app from '../src/index.js';
 
 describe('Authentication Endpoints', () => {
   const testUser = {
-    email: 'test@example.com',
+    email: 'jesttest@example.com',
     password: 'password123',
-    name: 'Test User'
+    name: 'jest test user'
   };
 
   //TODO: why does both signup and login use post??
 
   describe('POST /api/auth/signup', () => {
     it('should create a new user', async () => {
-      const res = await request(app)
-        .post('/api/auth/signup')
-        .send(testUser);
+      const res = await request(app).post('/api/auth/signup').send(testUser);
 
       expect(res.statusCode).toBe(201);
       expect(res.body).toHaveProperty('user');

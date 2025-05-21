@@ -4,9 +4,9 @@ import app from '../src/index.js';
 describe('Items Endpoints', () => {
   let authToken;
   const testUser = {
-    email: 'test@example.com',
+    email: 'itemtest@example.com',
     password: 'password123',
-    name: 'Test User'
+    name: 'Item Test User'
   };
 
   const testItem = {
@@ -21,11 +21,30 @@ describe('Items Endpoints', () => {
     const signupRes = await request(app)
       .post('/api/auth/signup')
       .send(testUser);
+    
     authToken = signupRes.body.token;
+
+    // Verify the token works by making a test request
+    const verifyRes = await request(app)
+      .get('/api/auth/me')
+      .set('Authorization', `Bearer ${authToken}`);
+    
+    if (verifyRes.status !== 200) {
+      console.error('Token verification failed:', {
+        status: verifyRes.status,
+        body: verifyRes.body,
+        error: verifyRes.error,
+        headers: verifyRes.headers
+      });
+      throw new Error('Token verification failed');
+    }
   });
+
 
   describe('POST /api/items', () => {
     it('should create a new item', async () => {
+      console.log('Making request with token:', authToken);
+      
       const res = await request(app)
         .post('/api/items')
         .set('Authorization', `Bearer ${authToken}`)

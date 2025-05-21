@@ -34,4 +34,10 @@ app.use('/api/shoplists', auth, shoplistRoutes);
 app.use('/api/shoplist-items', auth, shoplistItemRoutes);
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Only start the server if this file is run directly
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+export default app;

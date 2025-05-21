@@ -4,7 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "prisma migrate reset --force && jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [],
   "author": "",

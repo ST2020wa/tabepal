@@ -1,0 +1,32 @@
+{
+  "common": {
+    "welcome": "欢迎",
+    "login": "登录",
+    "signup": "注册",
+    "logout": "退出",
+    "storage": "库存",
+    "shoplist": "购物清单",
+    "visitor": "访客模式"
+  },
+  "auth": {
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "forgotPassword": "忘记密码？",
+    "noAccount": "没有账号？",
+    "hasAccount": "已有账号？"
+  },
+  "storage": {
+    "addItem": "添加物品",
+    "search": "搜索物品...",
+    "categories": "分类",
+    "expiryDate": "过期日期",
+    "quantity": "数量"
+  },
+  "shoplist": {
+    "create": "创建新清单",
+    "addItem": "添加物品",
+    "completed": "已完成",
+    "pending": "待处理"
+  }
+} 

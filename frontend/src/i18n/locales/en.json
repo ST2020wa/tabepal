@@ -1,0 +1,32 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "storage": "Storage",
+    "shoplist": "Shopping List",
+    "visitor": "Visitor Mode"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "storage": {
+    "addItem": "Add Item",
+    "search": "Search items...",
+    "categories": "Categories",
+    "expiryDate": "Expiry Date",
+    "quantity": "Quantity"
+  },
+  "shoplist": {
+    "create": "Create New List",
+    "addItem": "Add Item",
+    "completed": "Completed",
+    "pending": "Pending"
+  }
+} 

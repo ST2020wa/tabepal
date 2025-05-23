@@ -1,0 +1,32 @@
+{
+  "common": {
+    "welcome": "ようこそ",
+    "login": "ログイン",
+    "signup": "新規登録",
+    "logout": "ログアウト",
+    "storage": "在庫",
+    "shoplist": "買い物リスト",
+    "visitor": "ゲストモード"
+  },
+  "auth": {
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "confirmPassword": "パスワード確認",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "hasAccount": "すでにアカウントをお持ちですか？"
+  },
+  "storage": {
+    "addItem": "アイテムを追加",
+    "search": "アイテムを検索...",
+    "categories": "カテゴリー",
+    "expiryDate": "賞味期限",
+    "quantity": "数量"
+  },
+  "shoplist": {
+    "create": "新しいリストを作成",
+    "addItem": "アイテムを追加",
+    "completed": "完了",
+    "pending": "保留中"
+  }
+} 

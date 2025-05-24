@@ -12,12 +12,12 @@ function App() {
   return (
     <LanguageProvider>
       <ThemeProvider>
-        <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-          <header className="p-4 flex justify-end gap-2">
+        <div className="min-h-screen w-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-red-500">
+          <header className="w-full p-4 flex justify-end gap-2 border border-red-200">
             <LanguageToggle />
             <ThemeToggle />
           </header>
-          <main className="container mx-auto p-4">
+          <main className="w-full p-4">
             <h1 className="text-2xl font-bold">{t('common.welcome')}</h1>
           </main>
         </div>

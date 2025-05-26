@@ -14,7 +14,9 @@
     "confirmPassword": "Confirm Password",
     "forgotPassword": "Forgot Password?",
     "noAccount": "Don't have an account?",
-    "hasAccount": "Already have an account?"
+    "hasAccount": "Already have an account?",
+    "login": "Log in",
+    "signup": "Sign up"
   },
   "storage": {
     "addItem": "Add Item",

@@ -5,21 +5,37 @@ import { ThemeToggle } from './components/ThemeToggle'
 import { LanguageToggle } from './components/LanguageToggle'
 import { useTranslation } from 'react-i18next'
 import './i18n/config'
+import { UserInfoToggle } from './components/UserInfo'
+import { HomeToggle } from './components/HomeToggle'
+import { Login } from './components/Login'
 
 function App() {
   const { t } = useTranslation()
 
+  const isLoggedIn = false;
+
   return (
     <LanguageProvider>
       <ThemeProvider>
-        <div className="min-h-screen w-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-red-500">
-          <header className="w-full p-4 flex justify-end gap-2 border border-red-200">
+        <div className="flex flex-col justify-between min-h-screen w-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-red-500">
+          <header className="w-full p-4 flex justify-end gap-2 border border-green-500">
             <LanguageToggle />
-            <ThemeToggle />
           </header>
-          <main className="w-full p-4">
-            <h1 className="text-2xl font-bold">{t('common.welcome')}</h1>
+          <main className="w-full p-4 border border-orange-500">
+            <Login />
+            {/* <h1 className="text-2xl font-bold">{t('common.welcome')}</h1> */}
           </main>
+          <footer className='flex justify-between w-full p-4 border border-blue-500'>
+            {isLoggedIn ? (
+              <>
+                <HomeToggle/>
+                <ThemeToggle />
+                <UserInfoToggle />
+              </>
+            ) : (
+              <div className="w-full h-8"></div>
+            )}
+          </footer>
         </div>
       </ThemeProvider>
     </LanguageProvider>

@@ -14,7 +14,9 @@
     "confirmPassword": "确认密码",
     "forgotPassword": "忘记密码？",
     "noAccount": "没有账号？",
-    "hasAccount": "已有账号？"
+    "hasAccount": "已有账号？",
+    "login": "登录",
+    "signup": "注册"
   },
   "storage": {
     "addItem": "添加物品",

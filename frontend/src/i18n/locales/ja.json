@@ -14,7 +14,9 @@
     "confirmPassword": "パスワード確認",
     "forgotPassword": "パスワードをお忘れですか？",
     "noAccount": "アカウントをお持ちでないですか？",
-    "hasAccount": "すでにアカウントをお持ちですか？"
+    "hasAccount": "すでにアカウントをお持ちですか？",
+    "login": "ログイン",
+    "signup": "新規登録"
   },
   "storage": {
     "addItem": "アイテムを追加",

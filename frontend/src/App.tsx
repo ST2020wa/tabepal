@@ -8,13 +8,15 @@ import './i18n/config'
 import { UserInfoToggle } from './components/UserInfo'
 import { HomeToggle } from './components/HomeToggle'
 import { Login } from './components/Login'
+import { AuthProvider, useAuth } from './contexts/AuthContext'
 
 function App() {
   const { t } = useTranslation()
 
-  const isLoggedIn = false;
+  const {isLoggedIn} = useAuth();
 
   return (
+    <AuthProvider>
     <LanguageProvider>
       <ThemeProvider>
         <div className="flex flex-col justify-between min-h-screen w-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-red-500">
@@ -28,7 +30,8 @@ function App() {
           <footer className='flex justify-between w-full p-4 border border-blue-500'>
             {isLoggedIn ? (
               <>
-                <HomeToggle/>
+              logged in placeholder
+                <HomeToggle />
                 <ThemeToggle />
                 <UserInfoToggle />
               </>
@@ -39,6 +42,7 @@ function App() {
         </div>
       </ThemeProvider>
     </LanguageProvider>
+    </AuthProvider>
   )
 }
 

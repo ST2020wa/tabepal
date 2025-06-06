@@ -1,13 +1,13 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 export function Login() {
     const { t } = useTranslation()
     const {login} = useAuth();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [error, setError] = useState("")
 
     const handleLogin = async () => {
         try{
@@ -22,20 +22,46 @@ export function Login() {
             if(!response.ok){
                 throw new Error(data.error || "Login failed");
             }
-            login(data.token, data.user)
+            login(data.token)
         }catch(error){
             console.error("login error", error);
         }
     }
 
     return (
-        <div>
-            <header className="text-wrap">{t('auth.login')}</header>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Log in</button>
-            <div className="text-wrap">{t('auth.noAccount')}<a href="#"> {t('auth.signup')}</a></div>
+        <div className="flex flex-col items-center justify-center">
+            <header className="text-wrap font-bold text-xl mb-4">{t('auth.login')}</header>
+            <div className="flex flex-col gap-4 w-full max-w-md">
+                <div className="flex items-center gap-2">
+                    <span className="w-32">{t('auth.email')}:</span>
+                    <input 
+                        type="email" 
+                        placeholder="Email" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="px-2 py-1 border rounded flex-1"
+                    />
+                </div>
+                <div className="flex items-center gap-2">
+                    <span className="w-32">{t('auth.password')}:</span>
+                    <input 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="px-2 py-1 border rounded flex-1"
+                    />
+                </div>
+                <button onClick={handleLogin} >
+                    {t('auth.login')}
+                </button>
+                <div className="text-center mt-4">
+                    {t('auth.noAccount')}
+                    <Link to="/signup" className="text-blue-500 hover:text-blue-600 ml-1">
+                        {t('auth.signup')}
+                    </Link>
+                </div>
+            </div>
         </div>
-      
     )
-  } 
+} 

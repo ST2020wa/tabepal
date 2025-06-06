@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
+import { Link } from "react-router-dom"
 
 export function Signup() {
     const { t } = useTranslation()
@@ -30,12 +31,41 @@ export function Signup() {
 
     return (
         <div>
-            <header className="text-wrap">{t('auth.signup')}</header>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <input type="password" placeholder="Confirm password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <header className="text-wrap font-bold text-xl">{t('auth.signup')}</header>
+            <div className="flex flex-col gap-4 items-center justify-center">
+                <div className="flex items-center gap-2">
+                    <span>{t('auth.email')}:</span>
+                    <input 
+                        type="email" 
+                        placeholder="Email" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="px-2 py-1 border rounded"
+                    />
+                </div>
+                <div className="flex items-center gap-2">
+                    <span>{t('auth.password')}:</span>
+                    <input 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="px-2 py-1 border rounded"
+                    />
+                </div>
+                <div className="flex items-center gap-2">
+                    <span>{t('auth.confirmPassword')}:</span>
+                    <input 
+                        type="password" 
+                        placeholder="Confirm password" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="px-2 py-1 border rounded"
+                    />
+                </div>
+            </div>
             <button onClick={handleSignup}>{t('auth.signup')}</button>
-            <div className="text-wrap">{t('auth.noAccount')}<a href="#"> {t('auth.signup')}</a></div>
+            <div className="text-wrap">{t('auth.hasAccount')} <Link to="/login">{t('auth.login')}</Link></div>
         </div>
       
     )

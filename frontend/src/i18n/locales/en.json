@@ -6,7 +6,8 @@
     "logout": "Logout",
     "storage": "Storage",
     "shoplist": "Shopping List",
-    "visitor": "Visitor Mode"
+    "visitor": "Visitor Mode",
+    "user":"User"
   },
   "auth": {
     "email": "Email",

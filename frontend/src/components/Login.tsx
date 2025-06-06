@@ -52,7 +52,7 @@ export function Login() {
                         className="px-2 py-1 border rounded flex-1"
                     />
                 </div>
-                <button onClick={handleLogin} >
+                <button className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-200" onClick={handleLogin} >
                     {t('auth.login')}
                 </button>
                 <div className="text-center mt-4">

@@ -16,6 +16,7 @@
     "forgotPassword": "Forgot Password?",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
+    "passwordMismatch":"Password doesn't match",
     "login": "Log in",
     "signup": "Sign up"
   },

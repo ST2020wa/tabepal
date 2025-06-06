@@ -9,7 +9,6 @@ import { UserInfoToggle } from './components/UserInfo'
 import { HomeToggle } from './components/HomeToggle'
 import { Login } from './components/Login'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
-import { Signup } from './components/Signup'
 
 function AppContent() {
   const { t } = useTranslation()
@@ -24,7 +23,7 @@ function AppContent() {
           </header>
           <main className="w-full p-4 border border-orange-500">
             {isLoggedIn ? <>{t('common.welcome')} 😊</> : <Login />}
-          </main>
+          </main>   
           <footer className='flex justify-between w-full p-4 border border-blue-500'>
             {isLoggedIn ? (
               <>

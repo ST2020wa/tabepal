@@ -1,15 +1,8 @@
-import { createContext, useContext, useState } from "react";
-
-interface User {
-    id: string;
-    email: string;
-    name: string;
-}
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthContextType {
     isLoggedIn: boolean;
-    user: User | null;
-    login: (token: string, userData: User) => void;
+    login: (token: string) => void;
     logout: () => void;
 }
 
@@ -17,20 +10,31 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({children}: {children: React.ReactNode}) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] =useState<User | null>(null);
 
-    const login = (token: string, userData: User) =>{
+    // check log in status from localStorage
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        
+        if (token) {
+            try {
+                setIsLoggedIn(true);
+            } catch (error) {
+                console.error('Error parsing stored user data:', error);
+                localStorage.removeItem('token');
+            }
+        }
+    }, []);
+    
+    const login = (token: string) =>{
         localStorage.setItem('token', token);
-        setUser(userData);
         setIsLoggedIn(true);
     };
     const logout = () =>{
         localStorage.removeItem('token');
-        setUser(null);
         setIsLoggedIn(false);
     };
     return (
-        <AuthContext.Provider value={{isLoggedIn, user, login, logout}}>
+        <AuthContext.Provider value={{isLoggedIn, login, logout}}>
             {children}
         </AuthContext.Provider>
     );
@@ -41,5 +45,7 @@ export function useAuth() {
     if(context === undefined){
         throw new Error('useAuth must be used within an AuthProvider')
     }
+    //console.log(context);
+    
     return context;
 }

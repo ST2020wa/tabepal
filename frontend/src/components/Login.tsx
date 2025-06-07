@@ -30,7 +30,7 @@ export function Login() {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <header className="text-wrap font-bold text-xl mb-4">{t('auth.login')}</header>
+            <header className="text-wrap font-semibold text-2xl mb-4">{t('auth.login')}</header>
             <div className="flex flex-col gap-4 w-full max-w-md">
                 <div className="flex items-center gap-2">
                     <span className="w-32">{t('auth.email')}:</span>
@@ -39,7 +39,7 @@ export function Login() {
                         placeholder="Email" 
                         value={email} 
                         onChange={(e) => setEmail(e.target.value)}
-                        className="px-2 py-1 border rounded flex-1"
+                        className="px-2 py-1 flex-1 border-b border-gray-300"
                     />
                 </div>
                 <div className="flex items-center gap-2">
@@ -49,10 +49,10 @@ export function Login() {
                         placeholder="Password" 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)}
-                        className="px-2 py-1 border rounded flex-1"
+                        className="px-2 py-1 flex-1 border-b border-gray-300"
                     />
                 </div>
-                <button className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-200" onClick={handleLogin} >
+                <button className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white rounded-3xl hover:from-indigo-700 hover:to-indigo-900 transition-colors duration-200" onClick={handleLogin} >
                     {t('auth.login')}
                 </button>
                 <div className="text-center mt-4">

@@ -21,12 +21,12 @@ function AppContent() {
   return (
     <LanguageProvider>
       <ThemeProvider>
-        <div className="flex flex-col justify-between min-h-screen w-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-red-500">
-          <header className="w-full p-4 flex justify-end gap-2 border border-green-500">
+        <div className="flex flex-col justify-between min-h-screen w-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+          <header className="w-full p-4 flex justify-end gap-2">
             <LanguageToggle />
             {isLoggedIn && <button onClick={logout}>{t('common.logout')}</button>}
           </header>
-          <main className="w-full p-4 border border-orange-500">
+          <main className="w-full p-4">
           <Routes>
                 <Route path='/login' element={!isLoggedIn ? <Login/> : <Navigate to="/"/>}></Route>
                 <Route path='/signup' element={!isLoggedIn ? <Signup/> : <Navigate to="/"/>}></Route>
@@ -34,7 +34,7 @@ function AppContent() {
               </Routes>
             {/* {isLoggedIn ? <>{t('common.welcome')} 😊</> : <Login />} */}
           </main>   
-          <footer className='flex justify-between w-full p-4 border border-blue-500'>
+          <footer className='flex justify-between w-full p-4'>
             {isLoggedIn ? (
               <>
                 <HomeToggle />
@@ -42,7 +42,7 @@ function AppContent() {
                 <UserInfoToggle />
               </>
             ) : (
-              <div className="w-full h-8">not logged in</div>
+              <div className="w-full h-8"></div>
             )}
           </footer>
         </div>

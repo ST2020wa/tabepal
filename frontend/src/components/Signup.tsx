@@ -43,44 +43,53 @@ export function Signup() {
     }
 
     return (
-        <div>
-            <header className="text-wrap font-bold text-xl mb-4">{t('auth.signup')}</header>
-            <div className="flex flex-col gap-6 items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
+            <header className="text-wrap font-semibold text-2xl mb-4">{t('auth.signup')}</header>
+            <div className="flex flex-col gap-4 w-full max-w-md">
                 <div className="flex items-center gap-2">
-                    <span>{t('auth.email')}:</span>
+                    <span className="w-32">{t('auth.email')}:</span>
                     <input 
                         type="email" 
                         placeholder="Email" 
                         value={email} 
                         onChange={(e) => setEmail(e.target.value)}
-                        className="px-2 py-1 border rounded"
+                        className="px-2 py-1 flex-1 border-b border-gray-300"
                     />
                 </div>
                 <div className="flex items-center gap-2">
-                    <span>{t('auth.password')}:</span>
+                    <span className="w-32">{t('auth.password')}:</span>
                     <input 
                         type="password" 
                         placeholder="Password" 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)}
-                        className="px-2 py-1 border rounded"
+                        className="px-2 py-1 flex-1 border-b border-gray-300"
                     />
                 </div>
                 <div className="flex items-center gap-2">
-                    <span>{t('auth.confirmPassword')}:</span>
+                    <span className="w-32">{t('auth.confirmPassword')}:</span>
                     <input 
                         type="password" 
                         placeholder="Confirm password" 
                         value={confirmedPassword} 
                         onChange={(e) => setConfimedPassword(e.target.value)}
-                        className="px-2 py-1 border rounded"
+                        className="px-2 py-1 flex-1 border-b border-gray-300"
                     />
                 </div>
                 {passwordErr && <div className="text-red-500 text-sm">{passwordErr}</div>}
-                <button className="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-200" onClick={handleSignup}>{t('auth.signup')}</button>
-                <div className="text-wrap">{t('auth.hasAccount')} <Link to="/login">{t('auth.login')}</Link></div>
+                <button 
+                    className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white rounded-3xl hover:from-indigo-700 hover:to-indigo-900 transition-colors duration-200" 
+                    onClick={handleSignup}
+                >
+                    {t('auth.signup')}
+                </button>
+                <div className="text-center mt-4">
+                    {t('auth.hasAccount')} 
+                    <Link to="/login" className="text-blue-500 hover:text-blue-600 ml-1">
+                        {t('auth.login')}
+                    </Link>
+                </div>
             </div>
         </div>
-      
     )
-  } 
+} 

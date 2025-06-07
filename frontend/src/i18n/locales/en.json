@@ -18,7 +18,8 @@
     "hasAccount": "Already have an account?",
     "passwordMismatch":"Password doesn't match",
     "login": "Log in",
-    "signup": "Sign up"
+    "signup": "Sign up",
+    "signupSuccess": "Account created successfully! Redirecting to login..."
   },
   "storage": {
     "addItem": "Add Item",

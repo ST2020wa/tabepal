@@ -6,7 +6,8 @@
     "logout": "退出",
     "storage": "库存",
     "shoplist": "购物清单",
-    "visitor": "访客模式"
+    "visitor": "访客模式",
+    "user": "用户"
   },
   "auth": {
     "email": "邮箱",
@@ -15,8 +16,10 @@
     "forgotPassword": "忘记密码？",
     "noAccount": "没有账号？",
     "hasAccount": "已有账号？",
+    "passwordMismatch": "密码不匹配",
     "login": "登录",
-    "signup": "注册"
+    "signup": "注册",
+    "signupSuccess": "账户创建成功！正在跳转到登录页面..."
   },
   "storage": {
     "addItem": "添加物品",

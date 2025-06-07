@@ -34,7 +34,7 @@ router.post('/signup', async (req, res) => {
       data: {
         email,
         password: hashedPassword,
-        name,
+        name: name || email,
       },
       select: {
         id: true,

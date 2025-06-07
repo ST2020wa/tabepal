@@ -6,7 +6,8 @@
     "logout": "ログアウト",
     "storage": "在庫",
     "shoplist": "買い物リスト",
-    "visitor": "ゲストモード"
+    "visitor": "ゲストモード",
+    "user": "ユーザー"
   },
   "auth": {
     "email": "メールアドレス",
@@ -15,8 +16,10 @@
     "forgotPassword": "パスワードをお忘れですか？",
     "noAccount": "アカウントをお持ちでないですか？",
     "hasAccount": "すでにアカウントをお持ちですか？",
+    "passwordMismatch": "パスワードが一致しません",
     "login": "ログイン",
-    "signup": "新規登録"
+    "signup": "新規登録",
+    "signupSuccess": "アカウントが作成されました！ログインページにリダイレクトします..."
   },
   "storage": {
     "addItem": "アイテムを追加",

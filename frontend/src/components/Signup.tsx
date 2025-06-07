@@ -1,9 +1,12 @@
+import { Link, useNavigate } from "react-router-dom"
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Link } from "react-router-dom"
 
 export function Signup() {
     const { t } = useTranslation()
+    const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmedPassword, setConfimedPassword]=useState("")
@@ -16,21 +19,27 @@ export function Signup() {
             return;
         }
         setPasswordErr("");      
-        // try{
-        //     const response = await fetch('http://localhost:4000/api/auth/signup', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({ email, password })
-        //     });
-        //     const data = await response.json();
-        //     if(!response.ok){
-        //         throw new Error(data.error || "Login failed");
-        //     }
-        // }catch(error){
-        //     console.error("login error", error);
-        // }
+        try{
+            const response = await fetch('http://localhost:4000/api/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await response.json();
+            if(!response.ok){
+                throw new Error(data.error || "Login failed");
+            }else{
+                toast.success(t('auth.signupSuccess'));
+                setTimeout(() => {
+                    navigate('/login');
+                }, 2000);
+            }
+        }catch(error){
+            console.error("login error", error);
+            toast.error(error instanceof Error ? error.message : "Signup failed");
+        }
     }
 
     return (

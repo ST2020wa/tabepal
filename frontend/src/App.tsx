@@ -11,6 +11,8 @@ import { Login } from './components/Login'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Signup } from './components/Signup'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function AppContent() {
   const { t } = useTranslation()
@@ -53,6 +55,7 @@ function App() {
   return (
     <BrowserRouter>
         <AuthProvider>
+        <ToastContainer />
       <AppContent />
     </AuthProvider>
     </BrowserRouter>

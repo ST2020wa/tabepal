@@ -13,6 +13,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Signup } from './components/Signup'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Inventory } from './components/Inventory'
 
 function AppContent() {
   const { t } = useTranslation()
@@ -26,19 +27,18 @@ function AppContent() {
             <LanguageToggle />
             {isLoggedIn && <button onClick={logout}>{t('common.logout')}</button>}
           </header>
-          <main className="w-full p-4">
+          <main className="w-full p-4 flex-1">
           <Routes>
                 <Route path='/login' element={!isLoggedIn ? <Login/> : <Navigate to="/"/>}></Route>
                 <Route path='/signup' element={!isLoggedIn ? <Signup/> : <Navigate to="/"/>}></Route>
-                <Route path='/' element={isLoggedIn ? <>{t('common.welcome')} 😊</> : <Navigate to="/login"/>}></Route>
+                <Route path='/' element={isLoggedIn ? <Inventory/> : <Navigate to="/login"/>}></Route>
               </Routes>
-            {/* {isLoggedIn ? <>{t('common.welcome')} 😊</> : <Login />} */}
           </main>   
-          <footer className='flex justify-between w-full p-4'>
+          <footer className='flex justify-center w-full gap-4 p-4'>
             {isLoggedIn ? (
               <>
-                <HomeToggle />
                 <ThemeToggle />
+                <HomeToggle />
                 <UserInfoToggle />
               </>
             ) : (

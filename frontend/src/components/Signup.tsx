@@ -78,7 +78,7 @@ export function Signup() {
                 </div>
                 {passwordErr && <div className="text-red-500 text-sm">{passwordErr}</div>}
                 <button 
-                    className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white rounded-3xl hover:from-indigo-700 hover:to-indigo-900 transition-colors duration-200" 
+                    className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-900 text-white rounded-3xl hover:from-indigo-700 hover:to-indigo-900 transition-colors duration-200" 
                     onClick={handleSignup}
                 >
                     {t('auth.signup')}

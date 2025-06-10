@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Get all items for a user
 router.get('/', auth, async (req, res) => {
+  const userId = req.user.id;
   try {
     const { 
       sortBy = 'createdAt',
@@ -25,7 +26,9 @@ router.get('/', auth, async (req, res) => {
     };
 
     const items = await prisma.item.findMany({
-      where,
+      where: {
+        userId: userId
+      },
       orderBy: { [sortBy]: sortOrder },
       select: {
         id: true,

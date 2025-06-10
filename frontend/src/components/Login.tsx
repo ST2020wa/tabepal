@@ -21,8 +21,8 @@ export function Login() {
             const data = await response.json();
             if(!response.ok){
                 throw new Error(data.error || "Login failed");
-            }
-            login(data.token)
+            }            
+            login(data.token, data.user)
         }catch(error){
             console.error("login error", error);
         }

@@ -2,14 +2,21 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthContextType {
     isLoggedIn: boolean;
-    login: (token: string) => void;
+    user: User | null;
+    login: (token: string, user: User) => void;
     logout: () => void;
 }
+interface User {
+    id: number
+    email: string
+    name: string
+  }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({children}: {children: React.ReactNode}) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState<User | null>(null)
 
     // check log in status from localStorage
     useEffect(() => {
@@ -25,16 +32,18 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
         }
     }, []);
     
-    const login = (token: string) =>{
+    const login = (token: string, user: User) =>{
         localStorage.setItem('token', token);
+        setUser(user)
         setIsLoggedIn(true);
     };
     const logout = () =>{
         localStorage.removeItem('token');
+        setUser(null) 
         setIsLoggedIn(false);
     };
     return (
-        <AuthContext.Provider value={{isLoggedIn, login, logout}}>
+        <AuthContext.Provider value={{isLoggedIn, user, login, logout}}>
             {children}
         </AuthContext.Provider>
     );

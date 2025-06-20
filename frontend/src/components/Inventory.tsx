@@ -22,8 +22,8 @@ export function Inventory() {
     useEffect(()=>{
       const loadItems = async ()=>{
         setItems(await fetchItems());
-      }
-      if(user){
+      }      
+      if(user){        
         loadItems();
       }
     }, [])
@@ -88,6 +88,38 @@ const addNewItem = async ()=>{
   }
 }
 
+const deleteItem = async (itemId:number)=>{  
+  try{
+    const token = localStorage.getItem('token')
+    if(!token){
+      console.log('No token found')
+      return []
+    }  
+    const response = await fetch(`http://localhost:4000/api/items/${itemId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    if(!response.ok){
+      throw new Error('Failed to delete item')
+    }
+    const data = await response.json()
+    return data
+  }catch(error){
+    console.error("Error deleting item:", error)
+    return []
+  }
+}
+
+const handleDeleteItem = async (itemId:number)=>{
+  const result = await deleteItem(itemId)
+  if(result){
+    setItems(prevItems => prevItems.filter(item => item.id !== itemId))
+  }
+}
 
 const handleAddItem = async (e: React.MouseEvent<HTMLDivElement>)=>{
   const rect = e.currentTarget.getBoundingClientRect()
@@ -135,7 +167,8 @@ const handleCancel = () => {
           {/* TODO: 预览和添加后显示的顺序问题 */}
         {items.map((item, id) => (
           <div key={id}>
-            <h2>{item.name}</h2>
+            {/* todo: 触屏的样式用 react-swipeable 实现 */}
+            <h2 className="cursor-pointer hover:line-through hover:font-bold hover:text-red-500 transition-all duration-200" onClick={()=>handleDeleteItem(item.id!)}>{item.name}</h2>
           </div>
         ))}
         {showInput && (

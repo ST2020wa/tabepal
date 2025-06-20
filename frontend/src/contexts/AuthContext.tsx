@@ -21,24 +21,30 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     // check log in status from localStorage
     useEffect(() => {
         const token = localStorage.getItem('token');
+        const userData = localStorage.getItem('user');
         
-        if (token) {
+        if (token && userData) {
             try {
+                const user = JSON.parse(userData);
+                setUser(user);
                 setIsLoggedIn(true);
             } catch (error) {
                 console.error('Error parsing stored user data:', error);
                 localStorage.removeItem('token');
+                localStorage.removeItem('user');
             }
         }
     }, []);
     
     const login = (token: string, user: User) =>{
         localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
         setUser(user)
         setIsLoggedIn(true);
     };
     const logout = () =>{
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         setUser(null) 
         setIsLoggedIn(false);
     };

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSwipeable } from 'react-swipeable'
 
 interface Item {
@@ -15,11 +15,13 @@ interface SwipeableItemProps {
   item: Item
   onDelete: (itemId: number) => Promise<void>
   onEdit: (itemId: number, newName: string) => Promise<void>
+  isEditing: boolean
 }
 
 export function SwipeableItem({ item, onDelete, onEdit }: SwipeableItemProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [editValue, setEditValue] = useState(item.name || '')
+    const inputRef = useRef<HTMLInputElement>(null)
     
   const handlers = useSwipeable({
     onSwipedLeft: async () => {
@@ -30,12 +32,15 @@ export function SwipeableItem({ item, onDelete, onEdit }: SwipeableItemProps) {
     }
   })
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSave = async () => {
     if (editValue.trim()) {
       await onEdit(item.id!, editValue.trim())
       setIsEditing(false)
     }
+  }
+
+  const handleBlur = () => {
+    handleSave()
   }
 
   const handleCancel = () => {
@@ -45,39 +50,43 @@ export function SwipeableItem({ item, onDelete, onEdit }: SwipeableItemProps) {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleSubmit(e)
+      e.preventDefault()
+      handleSave()
     } else if (e.key === 'Escape') {
+      e.preventDefault()
       handleCancel()
     }
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isEditing && inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        handleSave()
+      }
+    }
+
+    if (isEditing) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isEditing])
+
   return (
     <div {...handlers} className="cursor-pointer hover:line-through hover:font-bold hover:text-red-500 transition-all duration-200">
             {isEditing ? (
-        <form onSubmit={handleSubmit} className="flex gap-2">
-          <input
-            type="text"
-            value={editValue}
-            onChange={(e) => setEditValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-            autoFocus
-          />
-          {/* TODO: 删掉按钮，用鼠标/点击事件去处理保存/取消 */}
-          <button
-            type="submit"
-            className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
-          >
-            保存
-          </button>
-          <button
-            type="button"
-            onClick={handleCancel}
-            className="px-3 py-1 bg-gray-500 text-white rounded hover:bg-gray-600"
-          >
-            取消
-          </button>
-        </form>
+        <input
+          ref={inputRef}
+          type="text"
+          value={editValue}
+          onChange={(e) => setEditValue(e.target.value)}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          autoFocus
+          className="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+        />
       ) : (
         <h2 className="text-lg font-medium">{item.name}</h2>
       )}

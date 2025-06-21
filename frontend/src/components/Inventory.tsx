@@ -133,6 +133,7 @@ const handleAddItem = async (e: React.MouseEvent<HTMLDivElement>)=>{
     const mainBottom = main.getBoundingClientRect().bottom - rect.top
     const footerTop = footer.getBoundingClientRect().top - rect.top
     if (clickY > mainBottom && clickY < footerTop) {
+      /* TODO: 按照当前的props，我想让inventory中的一个变量去判断，当swipeableitem组件的isEditing值为true时，不触发handleAddItem函数，或者将showInput这个写成false。当isEditing为false时，handleAddItem可以被触发 */
       if(!showInput){
         setShowInput(true)
         setTimeout(() => {
@@ -204,7 +205,7 @@ const handleCancel = () => {
         <main className='border border-blue-500'>
           {/* TODO: 预览和添加后显示的顺序问题 */}
         {items.map((item, id) => (
-          <SwipeableItem key={id} item={item} onDelete={handleDeleteItem} onEdit={handleEditItem}/>
+          <SwipeableItem key={id} item={item} onDelete={handleDeleteItem} onEdit={handleEditItem} isEditing={false}/>
         ))}
         {showInput && (
           <div><input className='border border-black' type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} /></div>

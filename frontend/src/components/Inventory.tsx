@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../contexts/AuthContext'
+import { useSwipeable } from 'react-swipeable'
+import { SwipeableItem } from './SwipeableItem'
 
 interface Item {
   id?: number
@@ -148,6 +150,42 @@ const handleAddItem = async (e: React.MouseEvent<HTMLDivElement>)=>{
   }
 }
 
+const editItem = async (itemId:number, updatedData: Partial<Item>)=>{
+  try{
+    const token = localStorage.getItem('token')
+    if(!token){
+      console.log('No token found')
+      return null
+    }
+    const response = await fetch(`http://localhost:4000/api/items/${itemId}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedData)
+    })
+    console.log(response)
+    if(!response.ok){
+      throw new Error('Failed to edit item')
+    }
+    const data = await response.json()
+    return data
+  }catch(error){
+    console.error("Error editing item:", error)
+    return []
+  }
+}
+
+const handleEditItem = async (itemId:number, newItemName:string)=>{
+  console.log('edit');
+  const result = await editItem(itemId, {name: newItemName})
+  if(result){
+    setItems(prevItems => prevItems.map(item => item.id === itemId ? result : item))
+  }
+}
+
 const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault()
   if (inputValue.trim()) {
@@ -160,16 +198,13 @@ const handleCancel = () => {
   setInputValue('')
   setShowInput(false)
 }
-    
+
     return (
       <div className="h-[calc(100vh-12rem)] overflow-y-auto border border-red-500 flex flex-col justify-between" onClick={handleAddItem}>
         <main className='border border-blue-500'>
           {/* TODO: 预览和添加后显示的顺序问题 */}
         {items.map((item, id) => (
-          <div key={id}>
-            {/* todo: 触屏的样式用 react-swipeable 实现 */}
-            <h2 className="cursor-pointer hover:line-through hover:font-bold hover:text-red-500 transition-all duration-200" onClick={()=>handleDeleteItem(item.id!)}>{item.name}</h2>
-          </div>
+          <SwipeableItem key={id} item={item} onDelete={handleDeleteItem} onEdit={handleEditItem}/>
         ))}
         {showInput && (
           <div><input className='border border-black' type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} /></div>

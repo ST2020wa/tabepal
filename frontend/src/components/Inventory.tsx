@@ -20,6 +20,7 @@ export function Inventory() {
     const [inputValue, setInputValue] = useState('')
     const inputRef = useRef<HTMLInputElement>(null)
     const [items, setItems] = useState<Item[]>([])
+    const [editingItemId, setEditingItemId] = useState<number | null>(null)
 
     useEffect(()=>{
       const loadItems = async ()=>{
@@ -124,6 +125,11 @@ const handleDeleteItem = async (itemId:number)=>{
 }
 
 const handleAddItem = async (e: React.MouseEvent<HTMLDivElement>)=>{
+  // 如果有item正在编辑，则不触发添加功能
+  if (editingItemId !== null) {
+    return
+  }
+
   const rect = e.currentTarget.getBoundingClientRect()
   const clickY = e.clientY - rect.top
   const main = e.currentTarget.querySelector('main')
@@ -133,7 +139,6 @@ const handleAddItem = async (e: React.MouseEvent<HTMLDivElement>)=>{
     const mainBottom = main.getBoundingClientRect().bottom - rect.top
     const footerTop = footer.getBoundingClientRect().top - rect.top
     if (clickY > mainBottom && clickY < footerTop) {
-      /* TODO: 按照当前的props，我想让inventory中的一个变量去判断，当swipeableitem组件的isEditing值为true时，不触发handleAddItem函数，或者将showInput这个写成false。当isEditing为false时，handleAddItem可以被触发 */
       if(!showInput){
         setShowInput(true)
         setTimeout(() => {
@@ -149,6 +154,11 @@ const handleAddItem = async (e: React.MouseEvent<HTMLDivElement>)=>{
       }
     }    
   }
+}
+
+// 简化的处理编辑状态变化的函数
+const handleEditingChange = (itemId: number, isEditing: boolean) => {
+  setEditingItemId(isEditing ? itemId : null)
 }
 
 const editItem = async (itemId:number, updatedData: Partial<Item>)=>{
@@ -167,7 +177,6 @@ const editItem = async (itemId:number, updatedData: Partial<Item>)=>{
       },
       body: JSON.stringify(updatedData)
     })
-    console.log(response)
     if(!response.ok){
       throw new Error('Failed to edit item')
     }
@@ -180,39 +189,61 @@ const editItem = async (itemId:number, updatedData: Partial<Item>)=>{
 }
 
 const handleEditItem = async (itemId:number, newItemName:string)=>{
-  console.log('edit');
   const result = await editItem(itemId, {name: newItemName})
   if(result){
     setItems(prevItems => prevItems.map(item => item.id === itemId ? result : item))
   }
 }
 
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault()
-  if (inputValue.trim()) {
-    setInputValue('')
-    setShowInput(false)
-  }
-}
-
-const handleCancel = () => {
-  setInputValue('')
-  setShowInput(false)
-}
-
     return (
-      <div className="h-[calc(100vh-12rem)] overflow-y-auto border border-red-500 flex flex-col justify-between" onClick={handleAddItem}>
-        <main className='border border-blue-500'>
-          {/* TODO: 预览和添加后显示的顺序问题 */}
-        {items.map((item, id) => (
-          <SwipeableItem key={id} item={item} onDelete={handleDeleteItem} onEdit={handleEditItem} isEditing={false}/>
-        ))}
-        {showInput && (
-          <div><input className='border border-black' type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} /></div>
-        )}
+      <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl" onClick={handleAddItem}>
+        <main className='space-y-2 sm:space-y-3 max-w-md mx-auto'>
+          {/* 空状态显示 */}
+          {items.length === 0 && !showInput && (
+            <div className="text-center py-12 animate-slide-in">
+              <div className="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </div>
+              <p className="text-gray-500 text-lg">还没有项目</p>
+              <p className="text-gray-400 text-sm mt-2">点击下方按钮开始添加</p>
+            </div>
+          )}
+          
+          {/* 项目列表 */}
+          {items.map((item, id) => (
+            <SwipeableItem 
+              key={id} 
+              item={item} 
+              onDelete={handleDeleteItem} 
+              onEdit={handleEditItem} 
+              isEditing={editingItemId === item.id}
+              onEditingChange={(isEditing) => handleEditingChange(item.id!, isEditing)}
+            />
+          ))}
+          
+          {/* 添加输入框 */}
+          {showInput && (
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 animate-slide-in">
+              <input 
+                ref={inputRef}
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
+                type="text" 
+                value={inputValue} 
+                onChange={(e) => setInputValue(e.target.value)} 
+                placeholder="添加新项目..."
+              />
+            </div>
+          )}
         </main>
-        <footer className='border border-blue-500'>
-          <button onClick={() => setShowInput(true)}>Add Item</button>
+        <footer className='mt-6 flex justify-center'>
+          <button 
+            onClick={() => setShowInput(true)}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
+          >
+            添加项目
+          </button>
         </footer>
       </div>
     )

@@ -16,26 +16,33 @@ interface SwipeableItemProps {
   onDelete: (itemId: number) => Promise<void>
   onEdit: (itemId: number, newName: string) => Promise<void>
   isEditing: boolean
+  onEditingChange: (isEditing: boolean) => void
 }
 
-export function SwipeableItem({ item, onDelete, onEdit }: SwipeableItemProps) {
-    const [isEditing, setIsEditing] = useState(false)
-    const [editValue, setEditValue] = useState(item.name || '')
-    const inputRef = useRef<HTMLInputElement>(null)
+export function SwipeableItem({ item, onDelete, onEdit, isEditing, onEditingChange }: SwipeableItemProps) {
+  const [internalIsEditing, setInternalIsEditing] = useState(false)
+  const [editValue, setEditValue] = useState(item.name || '')
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const isCurrentlyEditing = isEditing || internalIsEditing
     
   const handlers = useSwipeable({
     onSwipedLeft: async () => {
       await onDelete(item.id!)
     },
     onTap: () => {
-        setIsEditing(true)
-    }
+      if (!isCurrentlyEditing) {
+        setInternalIsEditing(true)
+        onEditingChange(true)
+      }
+  }
   })
 
   const handleSave = async () => {
     if (editValue.trim()) {
       await onEdit(item.id!, editValue.trim())
-      setIsEditing(false)
+      setInternalIsEditing(false)
+      onEditingChange(false)
     }
   }
 
@@ -45,7 +52,8 @@ export function SwipeableItem({ item, onDelete, onEdit }: SwipeableItemProps) {
 
   const handleCancel = () => {
     setEditValue(item.name || '')
-    setIsEditing(false)
+    setInternalIsEditing(false)
+    onEditingChange(false)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -60,23 +68,23 @@ export function SwipeableItem({ item, onDelete, onEdit }: SwipeableItemProps) {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (isEditing && inputRef.current && !inputRef.current.contains(event.target as Node)) {
+      if (isCurrentlyEditing && inputRef.current && !inputRef.current.contains(event.target as Node)) {
         handleSave()
       }
     }
 
-    if (isEditing) {
+    if (isCurrentlyEditing) {
       document.addEventListener('mousedown', handleClickOutside)
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [isEditing])
+  }, [isCurrentlyEditing])
 
   return (
-    <div {...handlers} className="cursor-pointer hover:line-through hover:font-bold hover:text-red-500 transition-all duration-200">
-            {isEditing ? (
+    <div {...handlers} className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all duration-200 cursor-pointer animate-slide-in">
+      {isCurrentlyEditing ? (
         <input
           ref={inputRef}
           type="text"
@@ -85,10 +93,15 @@ export function SwipeableItem({ item, onDelete, onEdit }: SwipeableItemProps) {
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           autoFocus
-          className="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       ) : (
-        <h2 className="text-lg font-medium">{item.name}</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-medium text-gray-800">{item.name}</h2>
+          <div className="flex space-x-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+          </div>
+        </div>
       )}
     </div>
   )

@@ -44,50 +44,52 @@ export function Signup() {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <header className="text-wrap font-semibold text-2xl mb-4">{t('auth.signup')}</header>
-            <div className="flex flex-col gap-4 w-full max-w-md">
-                <div className="flex items-center gap-2">
-                    <span className="w-32">{t('auth.email')}:</span>
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="px-2 py-1 flex-1 border-b border-gray-300"
-                    />
-                </div>
-                <div className="flex items-center gap-2">
-                    <span className="w-32">{t('auth.password')}:</span>
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="px-2 py-1 flex-1 border-b border-gray-300"
-                    />
-                </div>
-                <div className="flex items-center gap-2">
-                    <span className="w-32">{t('auth.confirmPassword')}:</span>
-                    <input 
-                        type="password" 
-                        placeholder="Confirm password" 
-                        value={confirmedPassword} 
-                        onChange={(e) => setConfimedPassword(e.target.value)}
-                        className="px-2 py-1 flex-1 border-b border-gray-300"
-                    />
-                </div>
-                {passwordErr && <div className="text-red-500 text-sm">{passwordErr}</div>}
-                <button 
-                    className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-900 text-white rounded-3xl hover:from-indigo-700 hover:to-indigo-900 transition-colors duration-200" 
-                    onClick={handleSignup}
-                >
-                    {t('auth.signup')}
-                </button>
-                <div className="text-center mt-4">
-                    {t('auth.hasAccount')} 
-                    <Link to="/login" className="text-blue-500 hover:text-blue-600 ml-1">
-                        {t('auth.login')}
-                    </Link>
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 w-full max-w-md animate-slide-in">
+                <header className="text-center font-semibold text-3xl mb-6 text-gray-800">{t('auth.signup')}</header>
+                <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-gray-700">{t('auth.email')}</label>
+                        <input 
+                            type="email" 
+                            placeholder="输入邮箱地址" 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-gray-700">{t('auth.password')}</label>
+                        <input 
+                            type="password" 
+                            placeholder="输入密码" 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-gray-700">{t('auth.confirmPassword')}</label>
+                        <input 
+                            type="password" 
+                            placeholder="确认密码" 
+                            value={confirmedPassword} 
+                            onChange={(e) => setConfimedPassword(e.target.value)}
+                            className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                    </div>
+                    {passwordErr && <div className="text-red-500 text-sm bg-red-50 p-3 rounded-lg">{passwordErr}</div>}
+                    <button 
+                        className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-all duration-200 transform hover:scale-105" 
+                        onClick={handleSignup}
+                    >
+                        {t('auth.signup')}
+                    </button>
+                    <div className="text-center mt-4 text-gray-600">
+                        {t('auth.hasAccount')} 
+                        <Link to="/login" className="text-blue-500 hover:text-blue-600 ml-1 font-medium">
+                            {t('auth.login')}
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

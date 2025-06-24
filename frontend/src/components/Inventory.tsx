@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useAuth } from '../contexts/AuthContext'
-import { useSwipeable } from 'react-swipeable'
 import { SwipeableItem } from './SwipeableItem'
 
-interface Item {
+export interface Item {
   id?: number
-  userId: number // TODO: user id use email or id?
+  userId: number
   name?: string
   createdAt?: Date
   quantity?: number
@@ -16,13 +14,13 @@ interface Item {
 
 export function Inventory() {
   const { user } = useAuth()
-    const [showInput, setShowInput] = useState(false)
-    const [inputValue, setInputValue] = useState('')
-    const inputRef = useRef<HTMLInputElement>(null)
-    const [items, setItems] = useState<Item[]>([])
-    const [editingItemId, setEditingItemId] = useState<number | null>(null)
+  const [showInput, setShowInput] = useState(false)
+  const [inputValue, setInputValue] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [items, setItems] = useState<Item[]>([])
+  const [editingItemId, setEditingItemId] = useState<number | null>(null)
 
-    useEffect(()=>{
+  useEffect(()=>{
       const loadItems = async ()=>{
         setItems(await fetchItems());
       }      
@@ -124,39 +122,22 @@ const handleDeleteItem = async (itemId:number)=>{
   }
 }
 
-const handleAddItem = async (e: React.MouseEvent<HTMLDivElement>)=>{
-  // 如果有item正在编辑，则不触发添加功能
-  if (editingItemId !== null) {
-    return
-  }
-
-  const rect = e.currentTarget.getBoundingClientRect()
-  const clickY = e.clientY - rect.top
-  const main = e.currentTarget.querySelector('main')
-  const footer = e.currentTarget.querySelector('footer')
-
-  if (main && footer) {
-    const mainBottom = main.getBoundingClientRect().bottom - rect.top
-    const footerTop = footer.getBoundingClientRect().top - rect.top
-    if (clickY > mainBottom && clickY < footerTop) {
-      if(!showInput){
-        setShowInput(true)
-        setTimeout(() => {
-          inputRef.current?.focus()
-        }, 0)
-      }else if(inputValue){
-        const newItem = await addNewItem();
-        setItems(prevItems => [...prevItems, newItem]);
-        setInputValue('');
-        setShowInput(false);
-      }else{
-        setShowInput(false);
-      }
-    }    
+const handleBlur=async ()=>{
+  if(!showInput){        
+    setShowInput(true)
+    setTimeout(() => {
+      inputRef.current?.focus()
+    }, 0)
+  }else if(inputValue){
+    const newItem = await addNewItem();
+    setItems(prevItems => [...prevItems, newItem]);
+    setInputValue('');
+    setShowInput(false);
+  }else{
+    setShowInput(false);
   }
 }
 
-// 简化的处理编辑状态变化的函数
 const handleEditingChange = (itemId: number, isEditing: boolean) => {
   setEditingItemId(isEditing ? itemId : null)
 }
@@ -196,16 +177,11 @@ const handleEditItem = async (itemId:number, newItemName:string)=>{
 }
 
     return (
-      <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl" onClick={handleAddItem}>
+      <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl">
         <main className='space-y-2 sm:space-y-3 max-w-md mx-auto'>
           {/* 空状态显示 */}
           {items.length === 0 && !showInput && (
             <div className="text-center py-12 animate-slide-in">
-              <div className="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-              </div>
               <p className="text-gray-500 text-lg">还没有项目</p>
               <p className="text-gray-400 text-sm mt-2">点击下方按钮开始添加</p>
             </div>
@@ -231,8 +207,9 @@ const handleEditItem = async (itemId:number, newItemName:string)=>{
                 className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
                 type="text" 
                 value={inputValue} 
-                onChange={(e) => setInputValue(e.target.value)} 
-                placeholder="添加新项目..."
+                onChange={(e) => setInputValue(e.target.value)}
+                onBlur={handleBlur} 
+                placeholder="添加新项目"
               />
             </div>
           )}

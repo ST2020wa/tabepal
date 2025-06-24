@@ -1,15 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSwipeable } from 'react-swipeable'
-
-interface Item {
-  id?: number
-  userId: number
-  name?: string
-  createdAt?: Date
-  quantity?: number
-  expiredDate?: Date
-  tag?: string
-}
+import type { Item } from './Inventory'
 
 interface SwipeableItemProps {
   item: Item

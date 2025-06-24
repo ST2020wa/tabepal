@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSwipeable } from 'react-swipeable'
+import { ExpiryIndicator } from './ExpiryIndicator'
 import type { Item } from './Inventory'
 
 interface SwipeableItemProps {
@@ -7,6 +8,7 @@ interface SwipeableItemProps {
   onDelete: (itemId: number) => Promise<void>
   onEdit: (itemId: number, newName: string) => Promise<void>
   isEditing: boolean
+  onEditExpiry: (itemId: number, expiredDate: Date | null)=>Promise<void>
   onEditingChange: (isEditing: boolean) => void
 }
 
@@ -71,26 +73,23 @@ export function SwipeableItem({ item, onDelete, onEdit, isEditing, onEditingChan
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [isCurrentlyEditing])
+  }, [handleSave, isCurrentlyEditing])
 
   return (
     <div {...handlers} className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all duration-200 cursor-pointer animate-slide-in">
       {isCurrentlyEditing ? (
-        <input
-          ref={inputRef}
-          type="text"
-          value={editValue}
-          onChange={(e) => setEditValue(e.target.value)}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
-          autoFocus
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
+        <input ref={inputRef} type="text" 
+        value={editValue} 
+        onChange={(e) => setEditValue(e.target.value)} 
+        onBlur={handleBlur} 
+        onKeyDown={handleKeyDown} autoFocus 
+        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
       ) : (
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-medium text-gray-800">{item.name}</h2>
           <div className="flex space-x-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <ExpiryIndicator expiredDate={item.expiredDate} />
           </div>
         </div>
       )}

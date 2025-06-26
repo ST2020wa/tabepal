@@ -174,15 +174,13 @@ const editItem = async (itemId:number, updatedData: Partial<Item>)=>{
   }
 }
 
-const handleEditItem = async (itemId:number, newItemName:string)=>{
-  const result = await editItem(itemId, {name: newItemName})
+const handleEditItem = async (itemId:number, newItemName:string, newExpiredDate:string)=>{
+  console.log(newItemName, newExpiredDate);
+  
+  const result = await editItem(itemId, {name: newItemName, expiredDate: newExpiredDate ? new Date(newExpiredDate) : undefined})
   if(result){
     setItems(prevItems => prevItems.map(item => item.id === itemId ? result : item))
   }
-}
-
-const handleEditExpiry = async (expiredDate)=>{
-  console.log(expiredDate);
 }
 
 const handleNameBlur = async () => {
@@ -270,7 +268,6 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
               item={item} 
               onDelete={handleDeleteItem} 
               onEdit={handleEditItem}
-              onEditExpiry={handleEditExpiry} 
               isEditing={editingItemId === item.id}
               onEditingChange={(isEditing) => handleEditingChange(item.id!, isEditing)}
             />
@@ -288,7 +285,7 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
                 onBlur={handleBlur} 
                 placeholder="添加新项目"
               />
-                              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2">
                   <input
                     type="date"
                     value={inputExpiryDate}

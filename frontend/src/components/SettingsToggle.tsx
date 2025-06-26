@@ -1,4 +1,4 @@
-export function UserInfoToggle() {
+export function SettingsToggle() {
   return (
     <button className="w-12 h-12 p-2 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white transition-all duration-200 flex items-center justify-center">
       <svg

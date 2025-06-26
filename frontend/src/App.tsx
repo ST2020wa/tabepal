@@ -1,11 +1,11 @@
 import './App.css'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { LanguageProvider } from './contexts/LanguageContext'
-import { ThemeToggle } from './components/ThemeToggle'
+// import { ThemeToggle } from './components/ThemeToggle'
 import { LanguageToggle } from './components/LanguageToggle'
 import { useTranslation } from 'react-i18next'
 import './i18n/config'
-import { UserInfoToggle } from './components/UserInfo'
+import { SettingsToggle } from './components/SettingsToggle'
 import { HomeToggle } from './components/HomeToggle'
 import { Login } from './components/Login'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
@@ -14,6 +14,8 @@ import { Signup } from './components/Signup'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Inventory } from './components/Inventory'
+import { ShoplistToggle } from './components/ShoplistToggle'
+import { Shoplist } from './components/Shoplist'
 
 function AppContent() {
   const { t } = useTranslation()
@@ -40,15 +42,17 @@ function AppContent() {
                 <Route path='/login' element={!isLoggedIn ? <Login/> : <Navigate to="/"/>}></Route>
                 <Route path='/signup' element={!isLoggedIn ? <Signup/> : <Navigate to="/"/>}></Route>
                 <Route path='/' element={isLoggedIn ? <Inventory/> : <Navigate to="/login"/>}></Route>
+                <Route path='/shoplist' element={isLoggedIn ? <Shoplist/> : <Navigate to="/login"/>}></Route>
               </Routes>
             </div>
           </main>   
           <footer className='flex justify-center w-full gap-4 p-4'>
             {isLoggedIn ? (
               <>
-                <ThemeToggle />
+                {/* TODO: put themetoggle into settings <ThemeToggle /> */}
+                <ShoplistToggle />
                 <HomeToggle />
-                <UserInfoToggle />
+                <SettingsToggle />
               </>
             ) : (
               <div className="w-full h-8"></div>

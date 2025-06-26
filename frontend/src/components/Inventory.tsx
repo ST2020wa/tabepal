@@ -174,9 +174,7 @@ const editItem = async (itemId:number, updatedData: Partial<Item>)=>{
   }
 }
 
-const handleEditItem = async (itemId:number, newItemName:string, newExpiredDate:string)=>{
-  console.log(newItemName, newExpiredDate);
-  
+const handleEditItem = async (itemId:number, newItemName:string, newExpiredDate:string)=>{  
   const result = await editItem(itemId, {name: newItemName, expiredDate: newExpiredDate ? new Date(newExpiredDate) : undefined})
   if(result){
     setItems(prevItems => prevItems.map(item => item.id === itemId ? result : item))

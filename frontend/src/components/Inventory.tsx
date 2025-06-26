@@ -305,7 +305,7 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
             onClick={() => setShowInput(true)}
             className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
           >
-            添加项目
+            Add Item
           </button>
         </footer>
       </div>

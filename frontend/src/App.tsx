@@ -20,7 +20,11 @@ import { Settings } from './components/Settings'
 
 function AppContent() {
   const { t } = useTranslation()
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, isLoading, logout } = useAuth();
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <LanguageProvider>

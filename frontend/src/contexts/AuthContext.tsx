@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthContextType {
     isLoggedIn: boolean;
+    isLoading: boolean;
     user: User | null;
     login: (token: string, user: User) => void;
     logout: () => void;
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({children}: {children: React.ReactNode}) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState<User | null>(null)
 
     // check log in status from localStorage
@@ -34,6 +36,7 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
                 localStorage.removeItem('user');
             }
         }
+        setIsLoading(false);
     }, []);
     
     const login = (token: string, user: User) =>{
@@ -49,7 +52,7 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
         setIsLoggedIn(false);
     };
     return (
-        <AuthContext.Provider value={{isLoggedIn, user, login, logout}}>
+        <AuthContext.Provider value={{isLoggedIn, isLoading,user, login, logout}}>
             {children}
         </AuthContext.Provider>
     );

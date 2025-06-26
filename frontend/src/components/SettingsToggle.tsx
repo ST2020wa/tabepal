@@ -1,6 +1,15 @@
+import { useNavigate } from "react-router-dom"
+
 export function SettingsToggle() {
+
+  const navigate = useNavigate()
+
+const handleSettingsClick = () => {
+    navigate('/settings')
+}
+
   return (
-    <button className="w-12 h-12 p-2 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white transition-all duration-200 flex items-center justify-center">
+    <button className="w-12 h-12 p-2 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white transition-all duration-200 flex items-center justify-center" onClick={handleSettingsClick}>
       <svg
         className="w-6 h-6"
         fill="none"

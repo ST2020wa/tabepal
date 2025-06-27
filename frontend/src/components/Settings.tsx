@@ -1,7 +1,7 @@
 export function Settings() {
     return (
         <div>
-            <h1>Settings placeholder</h1>
+            <h1 className="text-gray-100">Settings placeholder</h1>
         </div>
     )
 }

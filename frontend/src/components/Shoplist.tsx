@@ -134,13 +134,15 @@ export function Shoplist() {
     setEditingItemId(editingItemId === itemId ? null : itemId)
   }
 
+  
+
   return (
     <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl">
       <main className='max-w-2xl mx-auto'>
         {/* 头部 */}
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">Shop List</h1>
-        </div>
+        {/* <div className="text-center mb-6">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">Shop List</h1>
+        </div> */}
 
         {/* 空状态 */}
         {items.length === 0 && !showInput && (
@@ -152,18 +154,31 @@ export function Shoplist() {
 
         {/* 两列网格布局 */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          {items.map((item, id) => (
-            <div
-              key={id}
-              onClick={() => handleItemClick(item.id!)}
-              className="aspect-square bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex flex-col justify-end text-left"
-            >
-              <h1 className="text-lg font-medium text-gray-800 line-clamp-2">{item.name}</h1>
-              <p className="text-sm text-gray-500">
-                {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}
-              </p>
-            </div>
-          ))}
+          {items.map((item, id) => {
+            const gradients = [
+              "bg-gradient-to-br from-blue-400 to-purple-500",
+              "bg-gradient-to-br from-green-400 to-blue-500", 
+              "bg-gradient-to-br from-pink-400 to-orange-500",
+              "bg-gradient-to-br from-yellow-400 to-red-500",
+              "bg-gradient-to-br from-indigo-400 to-pink-500",
+              "bg-gradient-to-br from-teal-400 to-green-500",
+              "bg-gradient-to-br from-orange-400 to-yellow-500"
+            ]
+            const gradientClass = gradients[id % 7]
+            
+            return (
+              <div
+                key={id}
+                onClick={() => handleItemClick(item.id!)}
+                className={`aspect-square rounded-3xl shadow-lg p-4 m-1 flex flex-col justify-center text-left gap-2 ${gradientClass}`}
+              >
+                <h1 className="text-xl font-semibold text-white line-clamp-2">{item.name}</h1>
+                  <p className="text-sm text-white/80">
+                    {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}
+                  </p>
+              </div>
+            )
+          })}
         </div>
 
         {/* 添加输入框 */}

@@ -184,17 +184,18 @@ export function Shoplist() {
         {/* 添加输入框 */}
         {showInput && (
           <div className="mt-4 bg-white rounded-xl shadow-sm border border-gray-200 p-4 animate-slide-in">
-            <input
-              ref={inputRef}
-              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onBlur={handleBlur}
-              onKeyDown={handleKeyDown}
-              autoFocus
-            />
-          </div>
+          <input
+            ref={inputRef}
+            className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            placeholder="Add new shoplist name"
+            autoFocus
+          />
+        </div>
         )}
       </main>
 

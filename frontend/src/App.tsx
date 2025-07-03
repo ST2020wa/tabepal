@@ -17,6 +17,7 @@ import { Inventory } from './components/Inventory'
 import { ShoplistToggle } from './components/ShoplistToggle'
 import { Shoplist } from './components/Shoplist'
 import { Settings } from './components/Settings'
+import { ShoplistItem } from './components/Shoplistitem'
 
 function AppContent() {
   const { t } = useTranslation()
@@ -49,6 +50,7 @@ function AppContent() {
                 <Route path='/' element={isLoggedIn ? <Inventory/> : <Navigate to="/login"/>}></Route>
                 <Route path='/shoplist' element={isLoggedIn ? <Shoplist/> : <Navigate to="/login"/>}></Route>
                 <Route path='/settings' element={isLoggedIn ? <Settings/> : <Navigate to="/login"/>}></Route>
+                <Route path='/shoplist/:id' element={<ShoplistItem/>}></Route>
               </Routes>
             </div>
           </main>   

@@ -1,24 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
+import type { ShoplistItem } from './Shoplistitem'
 import { useNavigate } from 'react-router-dom'
-
-export interface ShopListItem {
-  id?: number
-  userId: number
-  name?: string
-  createdAt?: Date
-  quantity?: number
-  tag?: string
-}
 
 export function Shoplist() {
   const { user } = useAuth()
-  const navigate = useNavigate()
   const [showInput, setShowInput] = useState(false)
   const [inputValue, setInputValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
-  const [items, setItems] = useState<ShopListItem[]>([])
+  const [items, setItems] = useState<ShoplistItem[]>([])
   const [editingItemId, setEditingItemId] = useState<number | null>(null)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadItems = async () => {
@@ -132,6 +124,7 @@ export function Shoplist() {
     console.log('itemId', itemId)
     // 点击购物清单项可以进入详情或编辑模式
     setEditingItemId(editingItemId === itemId ? null : itemId)
+    navigate(`/shoplist/${itemId}`)
   }
 
   
@@ -170,7 +163,7 @@ export function Shoplist() {
               <div
                 key={id}
                 onClick={() => handleItemClick(item.id!)}
-                className={`aspect-square rounded-3xl shadow-lg p-4 m-1 flex flex-col justify-center text-left gap-2 ${gradientClass}`}
+                className={`aspect-square rounded-3xl shadow-lg p-4 m-1 flex flex-col justify-center text-left gap-2 ${gradientClass} cursor-pointer`}
               >
                 <h1 className="text-xl font-semibold text-white line-clamp-2">{item.name}</h1>
                   <p className="text-sm text-white/80">

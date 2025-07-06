@@ -12,6 +12,14 @@ export function Shoplist() {
   const [editingItemId, setEditingItemId] = useState<number | null>(null)
   const navigate = useNavigate();
 
+  // 添加鼠标长按相关状态
+  const [mousePressStartTime, setMousePressStartTime] = useState(0)
+  const [mousePressTimer, setMousePressTimer] = useState<NodeJS.Timeout | null>(null)
+  
+  // 添加删除确认相关状态
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [itemToDelete, setItemToDelete] = useState<ShoplistItem | null>(null)
+
   useEffect(() => {
     const loadItems = async () => {
       setItems(await fetchShopListItems())
@@ -20,6 +28,65 @@ export function Shoplist() {
       loadItems()
     }
   }, [])
+
+   // 鼠标按下事件
+   const handleMouseDown = (item: ShoplistItem) => {
+    console.log('🖱️ Mouse DOWN on item:', item.name)
+    setMousePressStartTime(Date.now())
+    
+    const timer = setTimeout(() => {
+      console.log('⏰ Long press detected for item:', item.name)
+      // 使用浏览器原生确认对话框
+      if (confirm(`Are you sure you want to delete "${item.name}"?`)) {
+        handleDeleteItem(item.id!)
+      }
+    }, 500) // 500ms 长按时间
+    
+    setMousePressTimer(timer)
+  }
+
+  // 鼠标松开事件
+  const handleMouseUp = (item: ShoplistItem) => {
+    console.log('🖱️ Mouse UP on item:', item.name)
+    
+    const pressDuration = Date.now() - mousePressStartTime
+    console.log('⏱️ Press duration:', pressDuration, 'ms')
+    
+    if (pressDuration < 500) {
+      console.log('👆 Short click detected for item:', item.name)
+      // 短按逻辑 - 进入详情页面
+      navigate(`/shoplist/${item.id}`)
+    } else {
+      console.log('🔒 Long press completed for item:', item.name)
+      // 长按已经在 timer 中处理了
+    }
+    
+    // 清除定时器
+    if (mousePressTimer) {
+      clearTimeout(mousePressTimer)
+      setMousePressTimer(null)
+    }
+  }
+
+  // 鼠标离开事件
+  const handleMouseLeave = (item: ShoplistItem) => {
+    console.log('�� Mouse LEFT item:', item.name)
+    // 鼠标离开时取消长按
+    if (mousePressTimer) {
+      clearTimeout(mousePressTimer)
+      setMousePressTimer(null)
+      console.log('❌ Long press cancelled due to mouse leave')
+    }
+  }
+
+  // 右键菜单事件处理
+  const handleContextMenu = (e: React.MouseEvent, item: ShoplistItem) => {
+    e.preventDefault() // 阻止默认右键菜单
+    console.log('🖱️ Right click on item:', item.name)
+    if (confirm(`Are you sure you want to delete "${item.name}"?`)) {
+      handleDeleteItem(item.id!)
+    }
+  }
 
   const fetchShopListItems = async () => {
     try {
@@ -121,13 +188,24 @@ export function Shoplist() {
   }
 
   const handleItemClick = (itemId: number) => {
-    console.log('itemId', itemId)
-    // 点击购物清单项可以进入详情或编辑模式
-    setEditingItemId(editingItemId === itemId ? null : itemId)
+    console.log('📱 Touch click on item ID:', itemId)
     navigate(`/shoplist/${itemId}`)
   }
 
-  
+  // 确认删除
+  const confirmDelete = async () => {
+    if (itemToDelete) {
+      await handleDeleteItem(itemToDelete.id!)
+      setShowDeleteConfirm(false)
+      setItemToDelete(null)
+    }
+  }
+
+  // 取消删除
+  const cancelDelete = () => {
+    setShowDeleteConfirm(false)
+    setItemToDelete(null)
+  }
 
   return (
     <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl">
@@ -162,13 +240,22 @@ export function Shoplist() {
             return (
               <div
                 key={id}
+                className={`aspect-square rounded-3xl shadow-lg p-4 m-1 flex flex-col justify-center text-left gap-2 ${gradientClass} cursor-pointer select-none`}
                 onClick={() => handleItemClick(item.id!)}
-                className={`aspect-square rounded-3xl shadow-lg p-4 m-1 flex flex-col justify-center text-left gap-2 ${gradientClass} cursor-pointer`}
+                onMouseDown={() => handleMouseDown(item)}
+                onMouseUp={() => handleMouseUp(item)}
+                onMouseLeave={() => handleMouseLeave(item)}
+                onContextMenu={(e) => handleContextMenu(e, item)}
+                style={{ 
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                  WebkitTouchCallout: 'none'
+                }}
               >
                 <h1 className="text-xl font-semibold text-white line-clamp-2">{item.name}</h1>
-                  <p className="text-sm text-white/80">
-                    {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}
-                  </p>
+                <p className="text-sm text-white/80">
+                  {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}
+                </p>
               </div>
             )
           })}

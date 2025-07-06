@@ -254,8 +254,8 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
           {/* 空状态显示 */}
           {items.length === 0 && !showInput && (
             <div className="text-center py-12 animate-slide-in">
-              <p className="text-gray-500 text-lg">还没有项目</p>
-              <p className="text-gray-400 text-sm mt-2">点击下方按钮开始添加</p>
+              <p className="text-gray-500 text-lg">There's nothing here.</p>
+              <p className="text-gray-400 text-sm mt-2">Click the button below to add.</p>
             </div>
           )}
           
@@ -281,7 +281,7 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
                 value={inputValue} 
                 onChange={(e) => setInputValue(e.target.value)}
                 onBlur={handleBlur} 
-                placeholder="添加新项目"
+                placeholder="Add new item"
               />
               <div className="flex items-center space-x-2">
                   <input

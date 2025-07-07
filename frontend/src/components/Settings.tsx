@@ -3,7 +3,7 @@ import { useTheme } from "../contexts/ThemeContext"
 import { LanguageToggle } from "./LanguageToggle"
 
 export function Settings() {
-  const { user } = useAuth()
+  const { logout, user } = useAuth();
   const { theme, toggleTheme } = useTheme()
 
   return (
@@ -29,15 +29,20 @@ export function Settings() {
           <button
             onClick={toggleTheme}
             className={`
-              px-4 py-2 rounded-full border
+              px-4 py-2 border
               ${theme === 'dark'
-                ? 'bg-gray-800 text-white border-gray-700 hover:bg-gray-700'
-                : 'bg-gray-100 text-gray-800 border-gray-300 hover:bg-gray-200'}
+                ? 'bg-gray-800 text-white hover:bg-gray-700'
+                : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}
               transition
             `}
           >
             {theme === 'dark' ? '🌙 Dark' : '☀️ Light'}
           </button>
+        </div>
+        {/* 登出 */}
+        <div className="flex items-center justify-between">
+          <span className="text-gray-700 dark:text-gray-200 font-medium">Logout</span>
+          <button className="text-red-500 hover:text-red-600 cursor-pointer text-sm " onClick={logout}>Logout</button>
         </div>
       </div>
     </div>

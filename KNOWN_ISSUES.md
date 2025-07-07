@@ -7,6 +7,7 @@
 - [ ]有时候item edit会失败，错误未知，可能和上一条有关
 - [ ]SwipeableItem 仅用于触屏/mobile用户组件，对于web用户的行为没有cover
 - [ ]底部Nav切换的时候，inventory在加载出来前会闪一下（无items）
+- [ ]切换语言的时候，会误触logout登出（按钮的宽度不一样导致）
 
 
 

@@ -9,9 +9,10 @@ interface SwipeableItemProps {
   onEdit: (itemId: number, newName: string, newExpiredDate: string) => Promise<void>
   isEditing: boolean
   onEditingChange: (isEditing: boolean) => void
+  hasExpiredDate?: boolean
 }
 
-export function SwipeableItem({ item, onDelete, onEdit, isEditing, onEditingChange }: SwipeableItemProps) {
+export function SwipeableItem({ item, onDelete, onEdit, isEditing, onEditingChange, hasExpiredDate }: SwipeableItemProps) {
   const [internalIsEditing, setInternalIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(item.name || '')
   const [inputExpiryDate, setInputExpiryDate] = useState<string>('')
@@ -102,7 +103,7 @@ export function SwipeableItem({ item, onDelete, onEdit, isEditing, onEditingChan
         autoFocus
         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
-      <input
+      {hasExpiredDate && (<input
         type="date"
         value={inputExpiryDate}
         onChange={(e) => setInputExpiryDate(e.target.value)}
@@ -111,14 +112,16 @@ export function SwipeableItem({ item, onDelete, onEdit, isEditing, onEditingChan
         onTouchStart={handleDateInputTouch}
         onMouseDown={handleDateInputMouseDown}
         className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      />
+      />)}
         </div>
       ) : (
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-medium text-gray-800">{item.name}</h2>
-          <div className="flex space-x-2">
-            <ExpiryIndicator expiredDate={item.expiredDate} />
-          </div>
+          {hasExpiredDate && (
+            <div className="flex space-x-2">
+              <ExpiryIndicator expiredDate={item.expiredDate} />
+            </div>
+          )}
         </div>
       )}
     </div>

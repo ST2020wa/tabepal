@@ -50,7 +50,7 @@ function AppContent() {
                 <Route path='/' element={isLoggedIn ? <Inventory/> : <Navigate to="/login"/>}></Route>
                 <Route path='/shoplist' element={isLoggedIn ? <Shoplist/> : <Navigate to="/login"/>}></Route>
                 <Route path='/settings' element={isLoggedIn ? <Settings/> : <Navigate to="/login"/>}></Route>
-                <Route path='/shoplist/:id' element={<ShoplistItem/>}></Route>
+                <Route path='/shoplist/:id' element={<ShoplistItem />}></Route>
               </Routes>
             </div>
           </main>   

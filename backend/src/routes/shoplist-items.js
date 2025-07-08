@@ -4,6 +4,36 @@ import { auth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+router.get('/', auth, async (req, res) => {
+  try {
+    const { shoplistId } = req.query;
+
+    if (!shoplistId) {
+      return res.status(400).json({ error: 'Shoplist ID is required' });
+    }
+
+    // Check shoplist ownership
+    const shoplist = await prisma.shopList.findFirst({
+      where: { 
+        id: parseInt(shoplistId),
+        userId: req.user.id
+      }
+    });
+
+    if (!shoplist) {
+      return res.status(404).json({ error: 'Shoplist not found' });
+    }
+
+    const shoplistItems = await prisma.shopListItem.findMany({
+      where: { shoplistId: parseInt(shoplistId) }
+    });
+
+    res.json(shoplistItems);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.post('/', auth, async (req, res) => {
   try {
     const { name, quantity, tag, shoplistId } = req.body;
@@ -36,36 +66,6 @@ router.post('/', auth, async (req, res) => {
     res.status(201).json(shoplistItem);
   } catch (error) {
     res.status(400).json({ error: error.message });
-  }
-});
-
-router.get('/', auth, async (req, res) => {
-  try {
-    const { shoplistId } = req.query;
-
-    if (!shoplistId) {
-      return res.status(400).json({ error: 'Shoplist ID is required' });
-    }
-
-    // Check shoplist ownership
-    const shoplist = await prisma.shopList.findFirst({
-      where: { 
-        id: parseInt(shoplistId),
-        userId: req.user.id
-      }
-    });
-
-    if (!shoplist) {
-      return res.status(404).json({ error: 'Shoplist not found' });
-    }
-
-    const shoplistItems = await prisma.shopListItem.findMany({
-      where: { shoplistId: parseInt(shoplistId) }
-    });
-
-    res.json(shoplistItems);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
   }
 });
 

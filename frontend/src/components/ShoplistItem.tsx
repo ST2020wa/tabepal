@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { SwipeableItem } from "./SwipeableItem"
 import { useAuth } from "../contexts/AuthContext"
+import { useParams } from "react-router-dom"
 
 export interface ShoplistItem {
     id?: number
@@ -9,21 +10,25 @@ export interface ShoplistItem {
     createdAt?: Date
     quantity?: number
     tag?: string
+    shoplistId?: number
   }
 
   export function ShoplistItem() {
     const { user } = useAuth()
+    const { id } = useParams();
+    const shoplistId = parseInt(id!);
     const inputRef = useRef<HTMLInputElement>(null)
     const [showInput, setShowInput] = useState(false)  
     const [inputValue, setInputValue] = useState('')
     const [shoplistItems, setShoplistItems] = useState<ShoplistItem[]>([])
     const [editingshoplistItem, setEditingshoplistItem] = useState<number | null>(null)
 
+
     useEffect(()=>{
       const loadItems = async ()=>{
         setShoplistItems(await fetchShoplistItems());
       }      
-      if(user){        
+      if(user && shoplistId){        
         loadItems();
       }
     }, [])
@@ -40,13 +45,14 @@ export interface ShoplistItem {
           console.log('No token found')
           return []
         }
-        const response = await fetch(`http://localhost:4000/api/shoplistitems?userId=${user.id}`, {
+        const response = await fetch(`http://localhost:4000/api/shoplist-items?shoplistId=${shoplistId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           }
         })
+
         if (!response.ok) {
           throw new Error('Failed to fetch items')
         }
@@ -66,7 +72,7 @@ export interface ShoplistItem {
           return []
         }
     
-        const response = await fetch(`http://localhost:4000/api/shoplistitems`, {
+        const response = await fetch(`http://localhost:4000/api/shoplist-items`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -74,7 +80,8 @@ export interface ShoplistItem {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            name: inputValue
+            name: inputValue,
+            shoplistId: shoplistId
           })
         })
           if(!response.ok){
@@ -95,7 +102,7 @@ export interface ShoplistItem {
           console.log('No token found')
           return []
         }  
-        const response = await fetch(`http://localhost:4000/api/shoplistitems/${shoplistItemId}`, {
+        const response = await fetch(`http://localhost:4000/api/shoplist-items/${shoplistItemId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -149,7 +156,7 @@ export interface ShoplistItem {
           console.log('No token found')
           return null
         }
-        const response = await fetch(`http://localhost:4000/api/shoplistitems/${shoplistItemId}`, {
+        const response = await fetch(`http://localhost:4000/api/shoplist-items/${shoplistItemId}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -192,6 +199,7 @@ export interface ShoplistItem {
             <SwipeableItem 
               key={id} 
               item={item} 
+              hasExpiredDate={false}
               onDelete={handleDeleteShoplistItem} 
               onEdit={handleEditShoplistItem}
               isEditing={editingshoplistItem === item.id}

@@ -264,6 +264,7 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
             <SwipeableItem 
               key={id} 
               item={item} 
+              hasExpiredDate={true}
               onDelete={handleDeleteItem} 
               onEdit={handleEditItem}
               isEditing={editingItemId === item.id}

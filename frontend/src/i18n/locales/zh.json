@@ -7,7 +7,12 @@
     "storage": "库存",
     "shoplist": "购物清单",
     "visitor": "访客模式",
-    "user": "用户"
+    "user": "用户",
+    "loading": "加载中...",
+    "language": "语言",
+    "theme": "主题",
+    "dark": "深色",
+    "light": "浅色"
   },
   "auth": {
     "email": "邮箱",
@@ -19,19 +24,48 @@
     "passwordMismatch": "密码不匹配",
     "login": "登录",
     "signup": "注册",
-    "signupSuccess": "账户创建成功！正在跳转到登录页面..."
+    "signupSuccess": "账户创建成功！正在跳转到登录页面...",
+    "emailPlaceholder": "请输入邮箱地址",
+    "passwordPlaceholder": "请输入密码",
+    "loginFailed": "登录失败",
+    "signupFailed": "注册失败"
   },
   "storage": {
     "addItem": "添加物品",
     "search": "搜索物品...",
     "categories": "分类",
     "expiryDate": "过期日期",
-    "quantity": "数量"
+    "quantity": "数量",
+    "emptyState": "这里什么都没有。",
+    "emptyStateSubtitle": "点击下方按钮添加。",
+    "addNewItem": "添加新物品",
+    "failedToFetch": "获取物品失败",
+    "failedToAdd": "添加物品失败",
+    "failedToDelete": "删除物品失败",
+    "failedToEdit": "编辑物品失败"
   },
   "shoplist": {
     "create": "创建新清单",
     "addItem": "添加物品",
     "completed": "已完成",
-    "pending": "待处理"
+    "pending": "待处理",
+    "emptyState": "没有购物清单",
+    "emptyStateSubtitle": "点击下方按钮添加",
+    "addShoplist": "添加购物清单",
+    "addNewShoplist": "添加新购物清单",
+    "addNewShoplistItem": "添加新购物清单项目",
+    "failedToFetch": "获取购物清单失败",
+    "failedToAdd": "添加购物清单失败",
+    "failedToDelete": "删除购物清单失败",
+    "failedToEdit": "编辑购物清单失败"
+  },
+  "settings": {
+    "language": "语言",
+    "theme": "主题",
+    "logout": "退出登录"
+  },
+  "errors": {
+    "noUserFound": "未找到用户",
+    "noTokenFound": "未找到令牌"
   }
 } 

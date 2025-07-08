@@ -7,7 +7,12 @@
     "storage": "Storage",
     "shoplist": "Shopping List",
     "visitor": "Visitor Mode",
-    "user":"User"
+    "user": "User",
+    "loading": "Loading...",
+    "language": "Language",
+    "theme": "Theme",
+    "dark": "Dark",
+    "light": "Light"
   },
   "auth": {
     "email": "Email",
@@ -16,22 +21,51 @@
     "forgotPassword": "Forgot Password?",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
-    "passwordMismatch":"Password doesn't match",
+    "passwordMismatch": "Password doesn't match",
     "login": "Log in",
     "signup": "Sign up",
-    "signupSuccess": "Account created successfully! Redirecting to login..."
+    "signupSuccess": "Account created successfully! Redirecting to login...",
+    "emailPlaceholder": "Input your email address",
+    "passwordPlaceholder": "Input your password",
+    "loginFailed": "Login failed",
+    "signupFailed": "Signup failed"
   },
   "storage": {
     "addItem": "Add Item",
     "search": "Search items...",
     "categories": "Categories",
     "expiryDate": "Expiry Date",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "emptyState": "There's nothing here.",
+    "emptyStateSubtitle": "Click the button below to add.",
+    "addNewItem": "Add new item",
+    "failedToFetch": "Failed to fetch items",
+    "failedToAdd": "Failed to add item",
+    "failedToDelete": "Failed to delete item",
+    "failedToEdit": "Failed to edit item"
   },
   "shoplist": {
     "create": "Create New List",
     "addItem": "Add Item",
     "completed": "Completed",
-    "pending": "Pending"
+    "pending": "Pending",
+    "emptyState": "No Shoplist",
+    "emptyStateSubtitle": "Click the button below to add",
+    "addShoplist": "Add Shoplist",
+    "addNewShoplist": "Add new shoplist",
+    "addNewShoplistItem": "Add new shoplist item",
+    "failedToFetch": "Failed to fetch shoplist items",
+    "failedToAdd": "Failed to add shoplist item",
+    "failedToDelete": "Failed to delete shoplist item",
+    "failedToEdit": "Failed to edit shoplist item"
+  },
+  "settings": {
+    "language": "Language",
+    "theme": "Theme",
+    "logout": "Logout"
+  },
+  "errors": {
+    "noUserFound": "No user found",
+    "noTokenFound": "No token found"
   }
 } 

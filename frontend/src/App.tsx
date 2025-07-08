@@ -24,7 +24,7 @@ function AppContent() {
   const { isLoggedIn, isLoading, logout } = useAuth();
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>{t('common.loading')}</div>
   }
 
   return (

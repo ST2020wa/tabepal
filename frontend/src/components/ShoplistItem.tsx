@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { SwipeableItem } from "./SwipeableItem"
 import { useAuth } from "../contexts/AuthContext"
 import { useParams } from "react-router-dom"
+import { useTranslation } from 'react-i18next'
 
 export interface ShoplistItem {
     id?: number
@@ -23,6 +24,7 @@ export interface ShoplistItem {
     const [inputValue, setInputValue] = useState('')
     const [shoplistItems, setShoplistItems] = useState<ShoplistItem[]>([])
     const [editingshoplistItem, setEditingshoplistItem] = useState<number | null>(null)
+    const { t } = useTranslation()
 
 
     useEffect(()=>{
@@ -190,8 +192,8 @@ export interface ShoplistItem {
           {/* 空状态显示 */}
           {shoplistItems.length === 0 && !showInput && (
             <div className="text-center py-12 animate-slide-in">
-              <p className="text-gray-500 dark:text-gray-400 text-lg">There's nothing here.</p>
-              <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">Click the button below to add.</p>
+              <p className="text-gray-500 dark:text-gray-400 text-lg">{t('shoplist.emptyState')}</p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">{t('shoplist.emptyStateSubtitle')}</p>
             </div>
           )}
           
@@ -218,7 +220,7 @@ export interface ShoplistItem {
                 value={inputValue} 
                 onChange={(e) => setInputValue(e.target.value)}
                 onBlur={handleBlur} 
-                placeholder="Add new shoplist item"
+                placeholder={t('shoplist.addNewShoplistItem')}
               />
             </div>
           )}
@@ -228,7 +230,7 @@ export interface ShoplistItem {
             onClick={() => setShowInput(true)}
             className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
           >
-            Add Item
+            {t('shoplist.addItem')}
           </button>
         </footer>
       </div>

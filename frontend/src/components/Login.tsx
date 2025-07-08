@@ -37,7 +37,7 @@ export function Login() {
                         <label className="text-sm font-medium text-gray-700">{t('auth.email')}</label>
                         <input 
                             type="email" 
-                            placeholder="Input your email address" 
+                            placeholder={t('auth.emailPlaceholder')} 
                             value={email} 
                             onChange={(e) => setEmail(e.target.value)}
                             className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -47,7 +47,7 @@ export function Login() {
                         <label className="text-sm font-medium text-gray-700">{t('auth.password')}</label>
                         <input 
                             type="password" 
-                            placeholder="Input your password" 
+                            placeholder={t('auth.passwordPlaceholder')} 
                             value={password} 
                             onChange={(e) => setPassword(e.target.value)}
                             className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"

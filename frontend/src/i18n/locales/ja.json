@@ -7,7 +7,12 @@
     "storage": "在庫",
     "shoplist": "買い物リスト",
     "visitor": "ゲストモード",
-    "user": "ユーザー"
+    "user": "ユーザー",
+    "loading": "読み込み中...",
+    "language": "言語",
+    "theme": "テーマ",
+    "dark": "ダーク",
+    "light": "ライト"
   },
   "auth": {
     "email": "メールアドレス",
@@ -19,19 +24,48 @@
     "passwordMismatch": "パスワードが一致しません",
     "login": "ログイン",
     "signup": "新規登録",
-    "signupSuccess": "アカウントが作成されました！ログインページにリダイレクトします..."
+    "signupSuccess": "アカウントが作成されました！ログインページにリダイレクトします...",
+    "emailPlaceholder": "メールアドレスを入力してください",
+    "passwordPlaceholder": "パスワードを入力してください",
+    "loginFailed": "ログインに失敗しました",
+    "signupFailed": "新規登録に失敗しました"
   },
   "storage": {
     "addItem": "アイテムを追加",
     "search": "アイテムを検索...",
     "categories": "カテゴリー",
     "expiryDate": "賞味期限",
-    "quantity": "数量"
+    "quantity": "数量",
+    "emptyState": "ここには何もありません。",
+    "emptyStateSubtitle": "下のボタンをクリックして追加してください。",
+    "addNewItem": "新しいアイテムを追加",
+    "failedToFetch": "アイテムの取得に失敗しました",
+    "failedToAdd": "アイテムの追加に失敗しました",
+    "failedToDelete": "アイテムの削除に失敗しました",
+    "failedToEdit": "アイテムの編集に失敗しました"
   },
   "shoplist": {
     "create": "新しいリストを作成",
     "addItem": "アイテムを追加",
     "completed": "完了",
-    "pending": "保留中"
+    "pending": "保留中",
+    "emptyState": "ショッピングリストがありません",
+    "emptyStateSubtitle": "下のボタンをクリックして追加してください",
+    "addShoplist": "ショッピングリストを追加",
+    "addNewShoplist": "新しいショッピングリストを追加",
+    "addNewShoplistItem": "新しいショッピングリストアイテムを追加",
+    "failedToFetch": "ショッピングリストの取得に失敗しました",
+    "failedToAdd": "ショッピングリストの追加に失敗しました",
+    "failedToDelete": "ショッピングリストの削除に失敗しました",
+    "failedToEdit": "ショッピングリストの編集に失敗しました"
+  },
+  "settings": {
+    "language": "言語",
+    "theme": "テーマ",
+    "logout": "ログアウト"
+  },
+  "errors": {
+    "noUserFound": "ユーザーが見つかりません",
+    "noTokenFound": "トークンが見つかりません"
   }
 } 

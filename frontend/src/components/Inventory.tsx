@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { SwipeableItem } from './SwipeableItem'
+import { useTranslation } from 'react-i18next'
 
 export interface Item {
   id?: number
@@ -22,6 +23,7 @@ export function Inventory() {
   const [editingItemId, setEditingItemId] = useState<number | null>(null)
   const [showExpiryInput, setShowExpiryInput] = useState(false)
   const expiryInputRef = useRef<HTMLInputElement>(null) // 新增
+  const { t } = useTranslation()
 
   useEffect(()=>{
       const loadItems = async ()=>{
@@ -254,8 +256,8 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
           {/* 空状态显示 */}
           {items.length === 0 && !showInput && (
             <div className="text-center py-12 animate-slide-in">
-              <p className="text-gray-500 text-lg">There's nothing here.</p>
-              <p className="text-gray-400 text-sm mt-2">Click the button below to add.</p>
+              <p className="text-gray-500 dark:text-gray-400 text-lg">{t('storage.emptyState')}</p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">{t('storage.emptyStateSubtitle')}</p>
             </div>
           )}
           
@@ -282,7 +284,7 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
                 value={inputValue} 
                 onChange={(e) => setInputValue(e.target.value)}
                 onBlur={handleBlur} 
-                placeholder="Add new item"
+                placeholder={t('storage.addNewItem')}
               />
               <div className="flex items-center space-x-2">
                 <input
@@ -306,7 +308,7 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
             onClick={() => setShowInput(true)}
             className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
           >
-            Add Item
+            {t('storage.addItem')}
           </button>
         </footer>
       </div>

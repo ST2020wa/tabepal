@@ -2,8 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import type { ShoplistItem } from './Shoplistitem'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export function Shoplist() {
+  const { t } = useTranslation()
   const { user } = useAuth()
   const [showInput, setShowInput] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -102,7 +104,7 @@ export function Shoplist() {
           'Content-Type': 'application/json'
         }
       })
-      if (!response.ok) throw new Error('Failed to fetch shoplist items')
+      if (!response.ok) throw new Error(t('shoplist.failedToFetch'))
       return await response.json()
     } catch (error) {
       console.error("Error fetching shoplist items:", error)
@@ -124,7 +126,7 @@ export function Shoplist() {
         },
         body: JSON.stringify({ name: inputValue })
       })
-      if (!response.ok) throw new Error('Failed to add shoplist item')
+      if (!response.ok) throw new Error(t('shoplist.failedToAdd'))
       return await response.json()
     } catch (error) {
       console.error("Error adding shoplist item:", error)
@@ -208,13 +210,13 @@ export function Shoplist() {
   }
 
   return (
-    <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gray-900/80 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl backdrop-blur-sm">
+    <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-white/90 dark:bg-gray-900/80 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl backdrop-blur-sm">
       <main className='max-w-2xl mx-auto'>
         {/* 空状态 */}
         {items.length === 0 && !showInput && (
           <div className="text-center py-12 animate-slide-in">
-            <p className="text-gray-500 dark:text-gray-400 text-lg">No Shoplist</p>
-            <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">Click the button below to add</p>
+            <p className="text-gray-500 dark:text-gray-400 text-lg">{t('shoplist.emptyState')}</p>
+            <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">{t('shoplist.emptyStateSubtitle')}</p>
           </div>
         )}
 
@@ -267,7 +269,7 @@ export function Shoplist() {
             onChange={(e) => setInputValue(e.target.value)}
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
-            placeholder="Add new shoplist name"
+            placeholder={t('shoplist.addNewShoplist')}
             autoFocus
           />
         </div>
@@ -279,7 +281,7 @@ export function Shoplist() {
           onClick={() => setShowInput(true)}
           className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
         >
-          Add Shoplist
+          {t('shoplist.addShoplist')}
         </button>
       </footer>
     </div>

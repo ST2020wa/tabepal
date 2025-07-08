@@ -89,15 +89,12 @@ Fully localized in three languages:
 ## 📸 Screenshots
 
 *Screenshots will be added as the project develops*
-
-  ![1](https://github.com/user-attachments/assets/3b7c443c-002b-47e6-8213-a2643566cf9f)
-  ![2](https://github.com/user-attachments/assets/457fcebc-ba1d-49c5-affe-d3a3e4f658a4)
-  ![3](https://github.com/user-attachments/assets/4f58238a-30bc-4e36-892f-97118744bb0d)
-
-  ![4](https://github.com/user-attachments/assets/784c7983-d6b8-40e9-9aeb-296f4d994a07)
-  ![5](https://github.com/user-attachments/assets/25d9f3f1-3994-46d8-b0d7-8ea4ec6b95e5)
-  ![6](https://github.com/user-attachments/assets/25d9f3f1-3994-46d8-b0d7-8ea4ec6b95e5)
-
+![2](https://github.com/user-attachments/assets/7992ea60-0c68-45f9-82a4-4847a4391cf8)
+![3](https://github.com/user-attachments/assets/e6ed1d99-3d53-4a5e-8878-ea9c3dfbb3ff)
+![1](https://github.com/user-attachments/assets/f4cf25f7-e31e-4424-aa89-902c2141c02a)
+![4](https://github.com/user-attachments/assets/10208e0f-bd29-4e38-ba71-aecfb05ef18d)
+![5](https://github.com/user-attachments/assets/db4a099b-ed60-4bb1-ab5d-5357d4a5ee7a)
+![6](https://github.com/user-attachments/assets/985caf5b-7b1c-4aa4-a9a2-7adbff5777f9)
 
 ##  Contributing
 

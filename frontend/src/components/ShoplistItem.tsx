@@ -11,6 +11,7 @@ export interface ShoplistItem {
     quantity?: number
     tag?: string
     shoplistId?: number
+    checked?: boolean
   }
 
   export function ShoplistItem() {
@@ -184,13 +185,13 @@ export interface ShoplistItem {
     }
 
     return (
-      <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl">
+      <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-white/90 dark:bg-gray-900/80 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl backdrop-blur-sm">
         <main className='space-y-2 sm:space-y-3 max-w-md mx-auto'>
           {/* 空状态显示 */}
           {shoplistItems.length === 0 && !showInput && (
             <div className="text-center py-12 animate-slide-in">
-              <p className="text-gray-500 text-lg">There's nothing here.</p>
-              <p className="text-gray-400 text-sm mt-2">Click the button below to add.</p>
+              <p className="text-gray-500 dark:text-gray-400 text-lg">There's nothing here.</p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">Click the button below to add.</p>
             </div>
           )}
           
@@ -209,10 +210,10 @@ export interface ShoplistItem {
           
           {/* 添加输入框 */}
           {showInput && (
-            <div className="flex bg-white rounded-xl shadow-sm border border-gray-200 p-4 animate-slide-in">
+            <div className="flex bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 animate-slide-in">
               <input 
                 ref={inputRef}
-                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
+                className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white' 
                 type="text" 
                 value={inputValue} 
                 onChange={(e) => setInputValue(e.target.value)}

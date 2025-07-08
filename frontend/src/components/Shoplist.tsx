@@ -208,18 +208,13 @@ export function Shoplist() {
   }
 
   return (
-    <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl">
+    <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gray-900/80 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl backdrop-blur-sm">
       <main className='max-w-2xl mx-auto'>
-        {/* 头部 */}
-        {/* <div className="text-center mb-6">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Shop List</h1>
-        </div> */}
-
         {/* 空状态 */}
         {items.length === 0 && !showInput && (
           <div className="text-center py-12 animate-slide-in">
-            <p className="text-gray-500 text-lg">No Shoplist</p>
-            <p className="text-gray-400 text-sm mt-2">Click the button below to add</p>
+            <p className="text-gray-500 dark:text-gray-400 text-lg">No Shoplist</p>
+            <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">Click the button below to add</p>
           </div>
         )}
 
@@ -227,13 +222,13 @@ export function Shoplist() {
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           {items.map((item, id) => {
             const gradients = [
-              "bg-gradient-to-br from-blue-400 to-purple-500",
-              "bg-gradient-to-br from-green-400 to-blue-500", 
-              "bg-gradient-to-br from-pink-400 to-orange-500",
-              "bg-gradient-to-br from-yellow-400 to-red-500",
-              "bg-gradient-to-br from-indigo-400 to-pink-500",
-              "bg-gradient-to-br from-teal-400 to-green-500",
-              "bg-gradient-to-br from-orange-400 to-yellow-500"
+              "bg-gradient-to-br from-blue-400 to-purple-500 dark:from-blue-600 dark:to-purple-700",
+              "bg-gradient-to-br from-green-400 to-blue-500 dark:from-green-600 dark:to-blue-700", 
+              "bg-gradient-to-br from-pink-400 to-orange-500 dark:from-pink-600 dark:to-orange-700",
+              "bg-gradient-to-br from-yellow-400 to-red-500 dark:from-yellow-600 dark:to-red-700",
+              "bg-gradient-to-br from-indigo-400 to-pink-500 dark:from-indigo-600 dark:to-pink-700",
+              "bg-gradient-to-br from-teal-400 to-green-500 dark:from-teal-600 dark:to-green-700",
+              "bg-gradient-to-br from-orange-400 to-yellow-500 dark:from-orange-600 dark:to-yellow-700"
             ]
             const gradientClass = gradients[id % 7]
             
@@ -263,10 +258,10 @@ export function Shoplist() {
 
         {/* 添加输入框 */}
         {showInput && (
-          <div className="mt-4 bg-white rounded-xl shadow-sm border border-gray-200 p-4 animate-slide-in">
+          <div className="mt-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 animate-slide-in">
           <input
             ref={inputRef}
-            className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+            className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}

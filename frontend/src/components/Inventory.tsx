@@ -249,7 +249,7 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
 }
 
     return (
-      <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl">
+      <div className="h-[calc(100vh-12rem)] overflow-y-auto bg-white/90 dark:bg-gray-900/60 p-2 sm:p-4 md:p-6 rounded-2xl shadow-xl backdrop-blur-sm">
         <main className='space-y-2 sm:space-y-3 max-w-md mx-auto'>
           {/* 空状态显示 */}
           {items.length === 0 && !showInput && (
@@ -274,10 +274,10 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
           
           {/* 添加输入框 */}
           {showInput && (
-            <div className="flex bg-white rounded-xl shadow-sm border border-gray-200 p-4 animate-slide-in">
+            <div className="flex bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 animate-slide-in">
               <input 
                 ref={inputRef}
-                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
+                className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white' 
                 type="text" 
                 value={inputValue} 
                 onChange={(e) => setInputValue(e.target.value)}
@@ -285,19 +285,19 @@ const handleDateInputMouseDown = (e: React.MouseEvent) => {
                 placeholder="Add new item"
               />
               <div className="flex items-center space-x-2">
-                  <input
-                    type="date"
-                    value={inputExpiryDate}
-                    onChange={(e) => setInputExpiryDate(e.target.value)}
-                    onBlur={handleExpiryBlur}
-                    onKeyDown={handleKeyDown}
-                    onClick={handleDateInputClick}
-                    onTouchStart={handleDateInputTouch}
-                    onMouseDown={handleDateInputMouseDown}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    min={new Date().toISOString().split('T')[0]}
-                  />
-                </div>
+                <input
+                  type="date"
+                  value={inputExpiryDate}
+                  onChange={(e) => setInputExpiryDate(e.target.value)}
+                  onBlur={handleExpiryBlur}
+                  onKeyDown={handleKeyDown}
+                  onClick={handleDateInputClick}
+                  onTouchStart={handleDateInputTouch}
+                  onMouseDown={handleDateInputMouseDown}
+                  className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  min={new Date().toISOString().split('T')[0]}
+                />
+              </div>
             </div>
           )}
         </main>

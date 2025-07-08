@@ -10,7 +10,6 @@ A beautiful, modern web application for managing your inventory items and shoppi
 tabepal/
 ├── frontend/          # React + TypeScript frontend application
 ├── backend/           # Node.js + Express API server
-├── prisma/           # Database schema and migrations
 └── docs/             # Project documentation
 ```
 
@@ -83,8 +82,8 @@ tabepal/
 ## 🌐 Internationalization
 
 Fully localized in three languages:
-- 🇺🇸 English
-- 🇨🇳 Chinese (中文)
+-  English
+-  Chinese (中文)
 -  Japanese (日本語)
 
 ## 📸 Screenshots

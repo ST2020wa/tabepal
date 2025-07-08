@@ -90,17 +90,13 @@ Fully localized in three languages:
 
 *Screenshots will be added as the project develops*
 
-<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
   ![1](https://github.com/user-attachments/assets/3b7c443c-002b-47e6-8213-a2643566cf9f)
   ![2](https://github.com/user-attachments/assets/457fcebc-ba1d-49c5-affe-d3a3e4f658a4)
   ![3](https://github.com/user-attachments/assets/4f58238a-30bc-4e36-892f-97118744bb0d)
-</div>
 
-<div style="display: flex; justify-content: space-between;">
   ![4](https://github.com/user-attachments/assets/784c7983-d6b8-40e9-9aeb-296f4d994a07)
   ![5](https://github.com/user-attachments/assets/25d9f3f1-3994-46d8-b0d7-8ea4ec6b95e5)
   ![6](https://github.com/user-attachments/assets/25d9f3f1-3994-46d8-b0d7-8ea4ec6b95e5)
-</div>
 
 
 ##  Contributing

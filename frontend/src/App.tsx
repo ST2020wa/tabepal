@@ -1,6 +1,7 @@
 import './App.css'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { LanguageProvider } from './contexts/LanguageContext'
+import { LanguageToggle } from './components/LanguageToggle'
 import { useTranslation } from 'react-i18next'
 import './i18n/config'
 import { SettingsToggle } from './components/SettingsToggle'
@@ -29,6 +30,9 @@ function AppContent() {
     <LanguageProvider>
       <ThemeProvider>
         <div className="flex flex-col justify-between min-h-screen w-screen">
+          <header className="w-full p-4 flex justify-end gap-2">
+            {!isLoggedIn && <LanguageToggle />}
+          </header>
           <main className="w-full p-4 flex-1 flex items-center justify-center">
             <div className="w-full max-w-2xl">
               <Routes>

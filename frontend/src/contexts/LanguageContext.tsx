@@ -20,10 +20,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return 'en'
   })
 
-  const changeLanguage = (lang: Language) => {
+  const [isLanguageChanging, setIsLanguageChanging] = useState(false)
+  const changeLanguage = async (lang: Language) => {
+    setIsLanguageChanging(true)
+    await i18n.changeLanguage(lang)
     setLanguage(lang)
-    i18n.changeLanguage(lang)
-    localStorage.setItem('language', lang)
+    setIsLanguageChanging(false)
   }
 
   const toggleLanguage = () => {

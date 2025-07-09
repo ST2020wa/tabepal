@@ -1,9 +1,9 @@
 import { useLanguage } from '../contexts/LanguageContext'
 
 const languageLabels: Record<string, string> = {
-  en: 'Change to 中文',
-  zh: '切换至 日本語',
-  ja: 'Englishに'
+  en: '切换至中文',
+  zh: '日本語に',
+  ja: 'Switch to English'
 }
 
 export function LanguageToggle() {

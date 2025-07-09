@@ -37,13 +37,13 @@ export function Inventory() {
 const fetchItems = async ()=>{
   try{
     if (!user) {
-      console.log('No user found')
+      console.log(t('errors.noUserFound'))
       return []
     }
     
     const token = localStorage.getItem('token')
     if (!token) {
-      console.log('No token found')
+      console.log(t('errors.noTokenFound'))
       return []
     }
     const response = await fetch(`http://localhost:4000/api/items?userId=${user.id}`, {
@@ -68,7 +68,7 @@ const addNewItem = async ()=>{
   try{
     const token = localStorage.getItem('token')
     if(!token){
-      console.log('No token found')
+      console.log(t('errors.noTokenFound'))
       return []
     }
 
@@ -99,7 +99,7 @@ const deleteItem = async (itemId:number)=>{
   try{
     const token = localStorage.getItem('token')
     if(!token){
-      console.log('No token found')
+      console.log(t('errors.noTokenFound'))
       return []
     }  
     const response = await fetch(`http://localhost:4000/api/items/${itemId}`, {
@@ -153,7 +153,7 @@ const editItem = async (itemId:number, updatedData: Partial<Item>)=>{
   try{
     const token = localStorage.getItem('token')
     if(!token){
-      console.log('No token found')
+      console.log(t('errors.noTokenFound'))
       return null
     }
     const response = await fetch(`http://localhost:4000/api/items/${itemId}`, {

@@ -10,6 +10,7 @@
 - [ ]切换语言的时候，会误触logout登出（按钮的宽度不一样导致）
 - [ ]shoplistitem/shoplistItem/shoplist-item命名不一致，debug困难
 - [ ]shoplist未实现edit功能
+- [ ]login/signup的dark mode 未实现
 
 
 

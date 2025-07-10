@@ -32,4 +32,5 @@ yarn-error.log*
 
 # Misc
 .cache/
-.temp/ 
+.temp/ backend/generated/
+backend/.prisma/

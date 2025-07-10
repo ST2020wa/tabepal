@@ -99,22 +99,22 @@ export function SwipeableItem({ item, onDelete, onEdit, isEditing, onEditingChan
           <input 
             ref={inputRef} 
             type="text" 
-            value={editValue} 
-            onChange={(e) => setEditValue(e.target.value)} 
-            onBlur={handleBlur} 
-            onKeyDown={handleKeyDown}
-            autoFocus
+        value={editValue} 
+        onChange={(e) => setEditValue(e.target.value)} 
+        onBlur={handleBlur} 
+        onKeyDown={handleKeyDown}
+        autoFocus
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-          />
+      />
           {hasExpiredDate && (
             <input
-              type="date"
-              value={inputExpiryDate}
-              onChange={(e) => setInputExpiryDate(e.target.value)}
-              onKeyDown={handleKeyDown}
-              onClick={handleDateInputClick}
-              onTouchStart={handleDateInputTouch}
-              onMouseDown={handleDateInputMouseDown}
+        type="date"
+        value={inputExpiryDate}
+        onChange={(e) => setInputExpiryDate(e.target.value)}
+        onKeyDown={handleKeyDown}
+        onClick={handleDateInputClick}
+        onTouchStart={handleDateInputTouch}
+        onMouseDown={handleDateInputMouseDown}
               className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           )}

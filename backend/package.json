@@ -6,7 +6,11 @@
   "scripts": {
     "test": "prisma migrate reset --force && jest",
     "test:watch": "jest --watch",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "build": "prisma generate",
+    "migrate": "prisma migrate deploy"
   },
   "keywords": [],
   "author": "",

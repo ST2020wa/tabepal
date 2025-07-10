@@ -22,7 +22,7 @@ export function Inventory() {
   const [items, setItems] = useState<Item[]>([])
   const [editingItemId, setEditingItemId] = useState<number | null>(null)
   const [showExpiryInput, setShowExpiryInput] = useState(false)
-  const expiryInputRef = useRef<HTMLInputElement>(null) // 新增
+  const expiryInputRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
 
   useEffect(()=>{
@@ -129,7 +129,6 @@ const handleDeleteItem = async (itemId:number)=>{
 }
 
 const handleBlur=async ()=>{
-  console.log(showInput, inputValue)
   if(!showInput){        
     setShowInput(true)
     setTimeout(() => {
@@ -200,11 +199,11 @@ const handleNameBlur = async () => {
   }
 }
 
-
 const handleExpiryBlur = async (e: React.FocusEvent) => {
   // 检查是否点击了日期选择器
   const relatedTarget = e.relatedTarget as HTMLElement
   if (relatedTarget && relatedTarget.type === 'date') {
+    console.log('hi')
     return // 如果点击的是日期选择器，不触发保存
   }
   

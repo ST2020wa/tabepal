@@ -89,6 +89,13 @@ Fully localized in three languages:
 ## 📸 Screenshots
 
 *Screenshots will be added as the project develops*
+|  |  |  |
+|:-:|:-:|:-:|
+| ![1](https://github.com/user-attachments/assets/8607d1d6-de13-4094-a98a-b06efb68ac78) | ![2](https://github.com/user-attachments/assets/8ae8e70b-fe3c-426d-84b8-a0102737b43c) | ![3](https://github.com/user-attachments/assets/66200b0f-e5fa-4c30-9243-f4d51e82e1ed) |
+| ![4](https://github.com/user-attachments/assets/1db0f75d-8488-4361-a932-250afe8a9e8d) | ![5](https://github.com/user-attachments/assets/a19024ed-08f5-4696-9dd9-3e424467af5f) | ![6](https://github.com/user-attachments/assets/913abaa7-1fdb-47a6-a857-f546e76f653a) |
+
+
+
 
 ##  Contributing
 

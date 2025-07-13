@@ -2,7 +2,6 @@ import './App.css'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { LanguageToggle } from './components/LanguageToggle'
-import { useTranslation } from 'react-i18next'
 import './i18n/config'
 import { SettingsToggle } from './components/SettingsToggle'
 import { HomeToggle } from './components/HomeToggle'
@@ -19,11 +18,10 @@ import { Settings } from './components/Settings'
 import { ShoplistItem } from './components/Shoplistitem'
 
 function AppContent() {
-  const { t } = useTranslation()
   const { isLoggedIn, isLoading } = useAuth();
 
   if (isLoading) {
-    return <div>{t('common.loading')}</div>
+    return <div>Loading...</div>
   }
 
   return (
@@ -65,10 +63,10 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-        <AuthProvider>
+      <AuthProvider>
         <ToastContainer />
-      <AppContent />
-    </AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </BrowserRouter>
   )
 }

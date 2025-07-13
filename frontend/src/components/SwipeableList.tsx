@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { SwipeableItem } from './SwipeableItem'
 import { useTranslation } from 'react-i18next'
+import { validateInput } from '../utils/validations'
 
 export interface SwipeableListItem {
   id?: number
@@ -45,6 +46,7 @@ export function SwipeableList({
   const inputRef = useRef<HTMLInputElement>(null)
   const expiryInputRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
+  const [validationError, setValidationError] = useState<string>('')
 
   const handleBlur = async () => {
     if (!showInput) {
@@ -53,8 +55,21 @@ export function SwipeableList({
         inputRef.current?.focus()
       }, 0)
     } else if (inputValue) {
+      // 使用通用验证
+      const validation = validateInput(inputValue, {
+        required: true,
+        minLength: 1,
+        maxLength: 16
+      })
+      
+      if (!validation.isValid) {
+        setValidationError(validation.error!)
+        return
+      }
+      
+      setValidationError('')
       const additionalData = hasExpiredDate ? { expiredDate: inputExpiryDate ? new Date(inputExpiryDate) : undefined } : {}
-      const newItem = await onAdd(inputValue, additionalData)
+      const newItem = await onAdd(inputValue.trim(), additionalData)
       if (newItem) {
         setInputValue('')
         setInputExpiryDate('')
@@ -137,6 +152,9 @@ export function SwipeableList({
                 onKeyDown={handleKeyDown}
                 className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               />
+            )}
+            {validationError && (
+              <p className="text-red-500 text-xs mt-2">{validationError}</p>
             )}
           </div>
         )}

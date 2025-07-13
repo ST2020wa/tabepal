@@ -121,7 +121,7 @@ export function SwipeableItem({ item, onDelete, onEdit, isEditing, onEditingChan
         </div>
       ) : (
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-medium text-gray-800 dark:text-gray-200">{item.name}</h2>
+          <h2 className="text-lg font-medium text-gray-800 dark:text-gray-200 w-48 truncate text-start">{item.name}</h2>
           {hasExpiredDate && (
             <div className="flex space-x-2">
               <ExpiryIndicator expiredDate={item.expiredDate} />

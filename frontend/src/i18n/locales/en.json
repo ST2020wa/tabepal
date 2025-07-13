@@ -66,6 +66,7 @@
   },
   "errors": {
     "noUserFound": "No user found",
-    "noTokenFound": "No token found"
+    "noTokenFound": "No token found",
+    "addItemFailed": "Failed to add item"
   }
 } 

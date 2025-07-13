@@ -66,6 +66,7 @@
   },
   "errors": {
     "noUserFound": "ユーザーが見つかりません",
-    "noTokenFound": "トークンが見つかりません"
+    "noTokenFound": "トークンが見つかりません",
+    "addItemFailed": "アイテムの追加に失敗しました"
   }
 } 

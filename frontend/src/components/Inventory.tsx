@@ -88,7 +88,8 @@ export function Inventory() {
       setItems(prevItems => [...prevItems, newItem])
       return newItem
     } catch (error) {
-      console.error("Error adding item:", error)
+      console.error(t('errors.addItemFailed'), error)
+      alert(t('errors.addItemFailed'))
       return null
     }
   }

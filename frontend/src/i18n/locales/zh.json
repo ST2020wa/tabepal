@@ -66,6 +66,7 @@
   },
   "errors": {
     "noUserFound": "未找到用户",
-    "noTokenFound": "未找到令牌"
+    "noTokenFound": "未找到令牌",
+    "addItemFailed": "添加物品失败"
   }
 } 

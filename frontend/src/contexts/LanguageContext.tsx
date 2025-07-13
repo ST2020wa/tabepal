@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -14,18 +14,33 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const { i18n } = useTranslation()
-  const [language, setLanguage] = useState<Language>(() => {
+  
+  const [language, setLanguageState] = useState<Language>(() => {
     const savedLang = localStorage.getItem('language') as Language
-    if (savedLang) return savedLang
+    if (savedLang) {
+      i18n.changeLanguage(savedLang)
+      return savedLang
+    }
     return 'en'
   })
 
-  const [isLanguageChanging, setIsLanguageChanging] = useState(false)
+  const [key, setKey] = useState(0) // 强制重新渲染的 key
+
+  useEffect(() => {
+    const handleLanguageChange = (lng: string) => {
+      setLanguageState(lng as Language)
+      localStorage.setItem('language', lng)
+      setKey(prev => prev + 1) // 强制重新渲染
+    }
+
+    i18n.on('languageChanged', handleLanguageChange)
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange)
+    }
+  }, [i18n])
+
   const changeLanguage = async (lang: Language) => {
-    setIsLanguageChanging(true)
     await i18n.changeLanguage(lang)
-    setLanguage(lang)
-    setIsLanguageChanging(false)
   }
 
   const toggleLanguage = () => {
@@ -37,7 +52,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage: changeLanguage, toggleLanguage }}>
-      {children}
+      <div key={key}>
+        {children}
+      </div>
     </LanguageContext.Provider>
   )
 }

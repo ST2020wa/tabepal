@@ -30,7 +30,7 @@
     "loginFailed": "Login failed",
     "signupFailed": "Signup failed"
   },
-  "storage": {
+  "inventory": {
     "addItem": "Add Item",
     "search": "Search items...",
     "categories": "Categories",

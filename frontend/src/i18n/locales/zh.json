@@ -30,7 +30,7 @@
     "loginFailed": "登录失败",
     "signupFailed": "注册失败"
   },
-  "storage": {
+  "inventory": {
     "addItem": "添加物品",
     "search": "搜索物品...",
     "categories": "分类",

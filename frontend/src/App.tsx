@@ -16,9 +16,12 @@ import { ShoplistToggle } from './components/ShoplistToggle'
 import { Shoplist } from './components/Shoplist'
 import { Settings } from './components/Settings'
 import { ShoplistItem } from './components/Shoplistitem'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useLocation } from 'react-router-dom'
 
 function AppContent() {
   const { isLoggedIn, isLoading } = useAuth();
+  const location = useLocation();
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -33,14 +36,24 @@ function AppContent() {
           </header>
           <main className="w-full p-4 flex-1 flex items-center justify-center">
             <div className="w-full max-w-2xl">
-              <Routes>
-                <Route path='/login' element={!isLoggedIn ? <Login/> : <Navigate to="/"/>}></Route>
-                <Route path='/signup' element={!isLoggedIn ? <Signup/> : <Navigate to="/"/>}></Route>
-                <Route path='/' element={isLoggedIn ? <Inventory/> : <Navigate to="/login"/>}></Route>
-                <Route path='/shoplist' element={isLoggedIn ? <Shoplist/> : <Navigate to="/login"/>}></Route>
-                <Route path='/settings' element={isLoggedIn ? <Settings/> : <Navigate to="/login"/>}></Route>
-                <Route path='/shoplist/:id' element={<ShoplistItem />}></Route>
-              </Routes>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={location.pathname}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Routes location={location}>
+                    <Route path='/login' element={!isLoggedIn ? <Login/> : <Navigate to="/"/>}></Route>
+                    <Route path='/signup' element={!isLoggedIn ? <Signup/> : <Navigate to="/login"/>}></Route>
+                    <Route path='/' element={isLoggedIn ? <Inventory/> : <Navigate to="/login"/>}></Route>
+                    <Route path='/shoplist' element={isLoggedIn ? <Shoplist/> : <Navigate to="/login"/>}></Route>
+                    <Route path='/settings' element={isLoggedIn ? <Settings/> : <Navigate to="/login"/>}></Route>
+                    <Route path='/shoplist/:id' element={<ShoplistItem />}></Route>
+                  </Routes>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </main>   
           <footer className='flex justify-center w-full gap-4 p-4'>

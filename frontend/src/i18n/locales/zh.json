@@ -40,7 +40,6 @@
     "emptyStateSubtitle": "点击下方按钮添加。",
     "addNewItem": "添加新物品",
     "failedToFetch": "获取物品失败",
-    "failedToAdd": "添加物品失败",
     "failedToDelete": "删除物品失败",
     "failedToEdit": "编辑物品失败"
   },
@@ -55,7 +54,6 @@
     "addNewShoplist": "添加新购物清单",
     "addNewShoplistItem": "添加新购物清单项目",
     "failedToFetch": "获取购物清单失败",
-    "failedToAdd": "添加购物清单失败",
     "failedToDelete": "删除购物清单失败",
     "failedToEdit": "编辑购物清单失败"
   },

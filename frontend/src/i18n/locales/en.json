@@ -40,7 +40,6 @@
     "emptyStateSubtitle": "Click the button below to add.",
     "addNewItem": "Add new item",
     "failedToFetch": "Failed to fetch items",
-    "failedToAdd": "Failed to add item",
     "failedToDelete": "Failed to delete item",
     "failedToEdit": "Failed to edit item"
   },
@@ -55,7 +54,6 @@
     "addNewShoplist": "Add new shoplist",
     "addNewShoplistItem": "Add new shoplist item",
     "failedToFetch": "Failed to fetch shoplist items",
-    "failedToAdd": "Failed to add shoplist item",
     "failedToDelete": "Failed to delete shoplist item",
     "failedToEdit": "Failed to edit shoplist item"
   },

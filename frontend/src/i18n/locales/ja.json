@@ -40,7 +40,6 @@
     "emptyStateSubtitle": "下のボタンをクリックして追加してください。",
     "addNewItem": "新しいアイテムを追加",
     "failedToFetch": "アイテムの取得に失敗しました",
-    "failedToAdd": "アイテムの追加に失敗しました",
     "failedToDelete": "アイテムの削除に失敗しました",
     "failedToEdit": "アイテムの編集に失敗しました"
   },
@@ -55,7 +54,6 @@
     "addNewShoplist": "新しいショッピングリストを追加",
     "addNewShoplistItem": "新しいショッピングリストアイテムを追加",
     "failedToFetch": "ショッピングリストの取得に失敗しました",
-    "failedToAdd": "ショッピングリストの追加に失敗しました",
     "failedToDelete": "ショッピングリストの削除に失敗しました",
     "failedToEdit": "ショッピングリストの編集に失敗しました"
   },

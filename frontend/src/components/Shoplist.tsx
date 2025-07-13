@@ -126,7 +126,7 @@ export function Shoplist() {
         },
         body: JSON.stringify({ name: inputValue })
       })
-      if (!response.ok) throw new Error(t('shoplist.failedToAdd'))
+      if (!response.ok) throw new Error(t('errors.addItemFailed'))
       return await response.json()
     } catch (error) {
       console.error("Error adding shoplist item:", error)

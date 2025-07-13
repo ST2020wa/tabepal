@@ -65,6 +65,11 @@
   "errors": {
     "noUserFound": "No user found",
     "noTokenFound": "No token found",
-    "addItemFailed": "Failed to add item"
+    "addItemFailed": "Failed to add item",
+    "itemNameAlreadyExists": "Item name already exists",
+    "addShoplistItemFailed": "Failed to add shoplist item",
+    "shoplistItemNameAlreadyExists": "Shoplist item name already exists",
+    "addShoplistFailed": "Failed to add shoplist",
+    "shoplistNameAlreadyExists": "Shoplist name already exists"
   }
 } 

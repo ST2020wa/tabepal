@@ -126,10 +126,25 @@ export function Shoplist() {
         },
         body: JSON.stringify({ name: inputValue })
       })
-      if (!response.ok) throw new Error(t('errors.addItemFailed'))
+      
+      if (!response.ok) {
+        const errorData = await response.json()        
+        if (errorData.error.includes('Unique constraint failed on the fields: (`name`)')) {
+          throw new Error('DUPLICATE_NAME')
+        } else {
+          throw new Error('ADD_FAILED')
+        }
+      }
+      
       return await response.json()
     } catch (error) {
-      console.error("Error adding shoplist item:", error)
+      if (error instanceof Error && error.message === 'DUPLICATE_NAME') {
+        console.error(t('errors.shoplistNameAlreadyExists'))
+        alert(t('errors.shoplistNameAlreadyExists'))
+      } else {
+        console.error(t('errors.addShoplistFailed'), error)
+        alert(t('errors.addShoplistFailed'))
+      }
       return null
     }
   }

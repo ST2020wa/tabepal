@@ -31,29 +31,29 @@
     "signupFailed": "注册失败"
   },
   "inventory": {
-    "addItem": "添加物品",
-    "search": "搜索物品...",
+    "addItem": "添加库存",
+    "search": "搜索库存...",
     "categories": "分类",
     "expiryDate": "过期日期",
     "quantity": "数量",
     "emptyState": "这里什么都没有。",
-    "emptyStateSubtitle": "点击下方按钮添加。",
-    "addNewItem": "添加新物品",
-    "failedToFetch": "获取物品失败",
-    "failedToDelete": "删除物品失败",
-    "failedToEdit": "编辑物品失败"
+    "emptyStateSubtitle": "点击下方按钮添加",
+    "addNewItem": "添加新库存",
+    "failedToFetch": "加载库存失败",
+    "failedToDelete": "删除库存失败",
+    "failedToEdit": "编辑库存失败"
   },
   "shoplist": {
     "create": "创建新清单",
-    "addItem": "添加物品",
+    "addItem": "添加购物清单",
     "completed": "已完成",
     "pending": "待处理",
     "emptyState": "没有购物清单",
     "emptyStateSubtitle": "点击下方按钮添加",
     "addShoplist": "添加购物清单",
     "addNewShoplist": "添加新购物清单",
-    "addNewShoplistItem": "添加新购物清单项目",
-    "failedToFetch": "获取购物清单失败",
+    "addNewShoplistItem": "添加新清单物品",
+    "failedToFetch": "加载购物清单失败",
     "failedToDelete": "删除购物清单失败",
     "failedToEdit": "编辑购物清单失败"
   },
@@ -65,6 +65,11 @@
   "errors": {
     "noUserFound": "未找到用户",
     "noTokenFound": "未找到令牌",
-    "addItemFailed": "添加物品失败"
+    "addItemFailed": "添加物品失败",
+    "itemNameAlreadyExists": "物品名称已存在",
+    "addShoplistItemFailed": "添加清单物品失败",
+    "shoplistItemNameAlreadyExists": "购物清单物品名称已存在",
+    "addShoplistFailed": "添加购物清单失败",
+    "shoplistNameAlreadyExists": "购物清单名称已存在"
   }
 } 

@@ -71,7 +71,7 @@ export function ShoplistItem() {
         console.log(t('errors.noTokenFound'))
         return null
       }
-  
+
       const response = await fetch(`http://localhost:4000/api/shoplist-items`, {
         method: 'POST',
         headers: {
@@ -85,14 +85,27 @@ export function ShoplistItem() {
           ...additionalData
         })
       })
+      
       if (!response.ok) {
-        throw new Error('Failed to add shoplist item')
+        const errorData = await response.json()        
+        if (errorData.error.includes('Unique constraint failed on the fields: (`name`)')) {
+          throw new Error('DUPLICATE_NAME')
+        } else {
+          throw new Error('ADD_FAILED')
+        }
       }
+      
       const newShoplistItem = await response.json()
       setShoplistItems(prevItems => [...prevItems, newShoplistItem])
       return newShoplistItem
     } catch (error) {
-      console.error("Error adding shoplist item:", error)
+      if (error instanceof Error && error.message === 'DUPLICATE_NAME') {
+        console.error(t('errors.shoplistItemNameAlreadyExists'))
+        alert(t('errors.shoplistItemNameAlreadyExists'))
+      } else {
+        console.error(t('errors.addShoplistItemFailed'), error)
+        alert(t('errors.addShoplistItemFailed'))
+      }
       return null
     }
   }

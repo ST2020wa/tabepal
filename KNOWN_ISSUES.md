@@ -6,18 +6,17 @@
 - [ ]数据库不允许item名字相同 -> 应该改为允许相同，只要id unique即可
 - [ ]有时候item edit会失败，错误未知，可能和上一条有关
 - [ ]SwipeableItem 仅用于触屏/mobile用户组件，对于web用户的行为没有cover
-- [ ]底部Nav切换的时候，inventory在加载出来前会闪一下（无items），其他时候切换也会闪别的内容
 - [ ]切换语言的时候，会误触logout登出（按钮的宽度不一样导致）
 - [ ]shoplistitem/shoplistItem/shoplist-item命名不一致，debug困难
 - [ ]shoplist未实现edit功能
-- [ ]login/signup的dark mode 未实现
+- [ ]国际化有重复的字符串
 
 
 
 
 
 
-
+- [x]底部Nav切换的时候，inventory在加载出来前会闪一下（无items），其他时候切换也会闪别的内容 -> 这个是路由切换时组件destory和生成导致的 -> 添加 framer-motion 库处理切换动画效果
 - [x]item添加失败，无报错，当前状态edit和delete都没问题 -> 用onBlur替代原本的检测容器位置触发add事件
 - [x]触屏模式新增item时，name设置后，date picker点击失败（name和expiredDate设置相互冲突）-> 常见的触屏时间冲突:
 `移动端日期选择器闪退问题概述

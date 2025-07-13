@@ -65,6 +65,11 @@
   "errors": {
     "noUserFound": "ユーザーが見つかりません",
     "noTokenFound": "トークンが見つかりません",
-    "addItemFailed": "アイテムの追加に失敗しました"
+    "addItemFailed": "アイテムの追加に失敗しました",
+    "itemNameAlreadyExists": "アイテム名がすでに存在します",
+    "addShoplistItemFailed": "ショッピングリストアイテムの追加に失敗しました",
+    "shoplistItemNameAlreadyExists": "ショッピングリストアイテム名がすでに存在します",
+    "addShoplistFailed": "ショッピングリストの追加に失敗しました",
+    "shoplistNameAlreadyExists": "ショッピングリスト名がすでに存在します"
   }
 } 

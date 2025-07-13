@@ -81,15 +81,28 @@ export function Inventory() {
           ...additionalData
         })
       })
+
       if (!response.ok) {
-        throw new Error('Failed to add item')
+        const errorData = await response.json()        
+        if (errorData.error.includes('Unique constraint failed on the fields: (`name`)')) {
+          throw new Error('DUPLICATE_NAME')
+        } else {
+          throw new Error('ADD_FAILED')
+        }
       }
+
       const newItem = await response.json()
       setItems(prevItems => [...prevItems, newItem])
       return newItem
+
     } catch (error) {
-      console.error(t('errors.addItemFailed'), error)
-      alert(t('errors.addItemFailed'))
+      if (error instanceof Error && error.message === 'DUPLICATE_NAME') {
+        console.error(t('errors.itemNameAlreadyExists'))
+        alert(t('errors.itemNameAlreadyExists'))
+      } else {
+        console.error(t('errors.addItemFailed'), error)
+        alert(t('errors.addItemFailed'))
+      }
       return null
     }
   }

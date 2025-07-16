@@ -9,7 +9,8 @@
 - [ ]切换语言的时候，会误触logout登出（按钮的宽度不一样导致）
 - [ ]shoplistitem/shoplistItem/shoplist-item命名不一致，debug困难
 - [ ]shoplist未实现edit功能
-- [ ]国际化有重复的字符串
+- [ ]国际化有重复的字符
+- [ ]lose connection的时候ui界面没有报错（控制台报错）
 
 
 

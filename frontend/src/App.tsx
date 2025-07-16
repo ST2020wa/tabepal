@@ -18,6 +18,10 @@ import { Settings } from './components/Settings'
 import { ShoplistItem } from './components/Shoplistitem'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useLocation } from 'react-router-dom'
+import { DashboardToggle } from './components/DashboardToggle'
+import { Dashboard } from './components/Dashboard'
+import { store } from './store'
+import { Provider } from 'react-redux'
 
 function AppContent() {
   const { isLoggedIn, isLoading } = useAuth();
@@ -51,6 +55,7 @@ function AppContent() {
                     <Route path='/shoplist' element={isLoggedIn ? <Shoplist/> : <Navigate to="/login"/>}></Route>
                     <Route path='/settings' element={isLoggedIn ? <Settings/> : <Navigate to="/login"/>}></Route>
                     <Route path='/shoplist/:id' element={<ShoplistItem />}></Route>
+                    <Route path='/dashboard' element={isLoggedIn ? <Dashboard/> : <Navigate to="/login"/>}></Route>
                   </Routes>
                 </motion.div>
               </AnimatePresence>
@@ -61,6 +66,7 @@ function AppContent() {
               <>
                 <ShoplistToggle />
                 <HomeToggle />
+                <DashboardToggle />
                 <SettingsToggle />
               </>
             ) : (
@@ -75,12 +81,14 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <ToastContainer />
-        <AppContent />
-      </AuthProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AuthProvider>
+          <ToastContainer />
+          <AppContent />
+        </AuthProvider>
+      </BrowserRouter>
+    </Provider>
   )
 }
 

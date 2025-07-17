@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import type { Item } from './Inventory'
-import type { ShoplistItem } from './Shoplistitem'
+import type { ShoplistItem } from './components/ShoplistItem'
 import { useTranslation } from 'react-i18next'
 import { useSelector, useDispatch } from 'react-redux'
-import type { RootState } from '../store'
+import type { AppDispatch, RootState } from '../store'
 import { increment, decrement } from '../slices/counterSlice'
+import { fetchDataLength } from '../slices/lengthSlice'
 
 const getExpiryStatus = (expiredDate: string | Date | undefined) => {
     if (!expiredDate) return { status: 'no-date', color: 'text-gray-400' }
@@ -31,68 +32,74 @@ export function Dashboard() {
     const [items, setItems] = useState<Item[]>([])
     const [shopListItems, setShopListItems] = useState<ShoplistItem[]>([])
     const { t } = useTranslation()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const count = useSelector((state: RootState) => state.counter.value)
+    const length = useSelector((state: RootState) => state.length.length)
+
+    const fetchItems = useCallback(async () => {
+        try {
+            if (!user) {
+                console.log(t('errors.noUserFound'))
+                return []
+            }
+            const token = localStorage.getItem('token')
+            if (!token) {
+                console.log(t('errors.noTokenFound'))
+                return []
+            }
+            const response = await fetch(`http://localhost:4000/api/items?userId=${user.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            if (!response.ok) {
+                throw new Error('Failed to fetch items')
+            }
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error("Error fetching items:", error)
+            return []
+        }
+    }, [user, t])
+
+    const fetchShopListItems = useCallback(async () => {
+        try {
+            if (!user) return []
+            const token = localStorage.getItem('token')
+            if (!token) return []
+            const response = await fetch(`http://localhost:4000/api/shoplists?userId=${user.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            if (!response.ok) throw new Error(t('shoplist.failedToFetch'))
+            return await response.json()
+        } catch (error) {
+            console.error("Error fetching shoplist items:", error)
+            return []
+        }
+    }, [user, t])
 
     useEffect(() => {
         if (user) {
-          Promise.all([
-            fetchItems().then(setItems),
-            fetchShopListItems().then(setShopListItems)
-          ])
+            dispatch(fetchDataLength(String(user.id)))
+            Promise.all([
+                fetchItems().then(setItems),
+                fetchShopListItems().then(setShopListItems)
+            ])
+            const interval = setInterval(() => {
+                console.log('Polling for updates...')
+                dispatch(fetchDataLength(String(user.id)))
+            }, 3000)
+            return () => clearInterval(interval)
         }
-    }, [user])    
-      const fetchItems = async () => {
-        try {
-          if (!user) {
-            console.log(t('errors.noUserFound'))
-            return []
-          }
-          
-          const token = localStorage.getItem('token')
-          if (!token) {
-            console.log(t('errors.noTokenFound'))
-            return []
-          }
-          const response = await fetch(`http://localhost:4000/api/items?userId=${user.id}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            }
-          })
-          if (!response.ok) {
-            throw new Error('Failed to fetch items')
-          }
-          const data = await response.json()
-          return data    
-        } catch (error) {
-          console.error("Error fetching items:", error)
-          return []
-        }
-      }
-      const fetchShopListItems = async () => {
-        try {
-          if (!user) return []
-          
-          const token = localStorage.getItem('token')
-          if (!token) return []
-          
-          const response = await fetch(`http://localhost:4000/api/shoplists?userId=${user.id}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            }
-          })
-          if (!response.ok) throw new Error(t('shoplist.failedToFetch'))
-          return await response.json()
-        } catch (error) {
-          console.error("Error fetching shoplist items:", error)
-          return []
-        }
-      }
-
+    }, [user, dispatch, fetchItems, fetchShopListItems])
+    
     return (
         <div className='flex flex-col gap-4'>
             <h1 className='text-2xl font-bold text-white'>Dashboard placeholder</h1>
@@ -132,8 +139,8 @@ export function Dashboard() {
                         </div>
                     ))}
                 </div>
-                <h2 className='text-lg font-bold text-white'>shoplists x {shopListItems.length}</h2> 
-                <div className='flex flex-col gap-2 text-white'>
+                <h2 className='text-lg font-bold text-white'>shoplists x {length}</h2> 
+                <div className='flex flex-col g ap-2 text-white'>
                     {shopListItems.map((shoplist) => (
                         <div key={shoplist.id}>
                             <h4 className='text-lg'>[ ] {shoplist.name}</h4>

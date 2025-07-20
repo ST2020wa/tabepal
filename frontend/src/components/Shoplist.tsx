@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import type { ShoplistItem } from './Shoplistitem'
+import type { ShoplistItem } from './ShoplistItem'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
+import type { AppDispatch } from '../store'
+import { fetchDataLength } from '../slices/lengthSlice'
 
 export function Shoplist() {
   const { t } = useTranslation()
@@ -13,6 +16,7 @@ export function Shoplist() {
   const [items, setItems] = useState<ShoplistItem[]>([])
   const [editingItemId, setEditingItemId] = useState<number | null>(null)
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>()
 
   // 添加鼠标长按相关状态
   const [mousePressStartTime, setMousePressStartTime] = useState(0)
@@ -28,16 +32,15 @@ export function Shoplist() {
     }
     if (user) {
       loadItems()
+      dispatch(fetchDataLength(String(user.id)))
     }
-  }, [])
+  }, [items.length])
 
    // 鼠标按下事件
    const handleMouseDown = (item: ShoplistItem) => {
-    console.log('🖱️ Mouse DOWN on item:', item.name)
     setMousePressStartTime(Date.now())
     
     const timer = setTimeout(() => {
-      console.log('⏰ Long press detected for item:', item.name)
       // 使用浏览器原生确认对话框
       if (confirm(`Are you sure you want to delete "${item.name}"?`)) {
         handleDeleteItem(item.id!)
@@ -48,18 +51,12 @@ export function Shoplist() {
   }
 
   // 鼠标松开事件
-  const handleMouseUp = (item: ShoplistItem) => {
-    console.log('🖱️ Mouse UP on item:', item.name)
-    
+  const handleMouseUp = (item: ShoplistItem) => {    
     const pressDuration = Date.now() - mousePressStartTime
-    console.log('⏱️ Press duration:', pressDuration, 'ms')
-    
     if (pressDuration < 500) {
-      console.log('👆 Short click detected for item:', item.name)
       // 短按逻辑 - 进入详情页面
       navigate(`/shoplist/${item.id}`)
     } else {
-      console.log('🔒 Long press completed for item:', item.name)
       // 长按已经在 timer 中处理了
     }
     
@@ -72,19 +69,16 @@ export function Shoplist() {
 
   // 鼠标离开事件
   const handleMouseLeave = (item: ShoplistItem) => {
-    console.log('�� Mouse LEFT item:', item.name)
-    // 鼠标离开时取消长按
+        // 鼠标离开时取消长按
     if (mousePressTimer) {
       clearTimeout(mousePressTimer)
       setMousePressTimer(null)
-      console.log('❌ Long press cancelled due to mouse leave')
     }
   }
 
   // 右键菜单事件处理
   const handleContextMenu = (e: React.MouseEvent, item: ShoplistItem) => {
     e.preventDefault() // 阻止默认右键菜单
-    console.log('🖱️ Right click on item:', item.name)
     if (confirm(`Are you sure you want to delete "${item.name}"?`)) {
       handleDeleteItem(item.id!)
     }
@@ -107,7 +101,6 @@ export function Shoplist() {
       if (!response.ok) throw new Error(t('shoplist.failedToFetch'))
       return await response.json()
     } catch (error) {
-      console.error("Error fetching shoplist items:", error)
       return []
     }
   }
@@ -183,7 +176,7 @@ export function Shoplist() {
       setTimeout(() => inputRef.current?.focus(), 0)
     } else if (inputValue) {
       const newShoplist = await addNewShoplist()
-      if (newShoplist) {
+      if (newShoplist) {        
         setItems(prevItems => [...prevItems, newShoplist])
         setInputValue('')
         setShowInput(false)
@@ -205,7 +198,6 @@ export function Shoplist() {
   }
 
   const handleItemClick = (itemId: number) => {
-    console.log('📱 Touch click on item ID:', itemId)
     navigate(`/shoplist/${itemId}`)
   }
 
